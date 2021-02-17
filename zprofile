@@ -9,7 +9,9 @@ fi
 export PATH=$PATH:$HOME/go/bin
 
 export MANPATH="~/.local/share/man:/usr/share/man:/usr/local/share/man"
-export EMAIL=ssegal127@gmail.com
+export EMAIL="ssegal127@gmail.com"
+#export GIT_AUTHOR_NAME="Stephen Segal"
+#export GIT_COMMITTER_NAME="Stephen Segal"
 
 pkg_config_paths=(
     "~/.local/lib/pkgconfig" \

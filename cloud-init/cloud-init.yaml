@@ -1,0 +1,28 @@
+#cloud-config
+users:
+  - name: ssegal
+    groups: sudo
+    gecos: Stephen Segal
+    shell: /bin/zsh
+    sudo: ALL=(ALL) ALL
+    ssh_import_id: gh:ssegal
+apt:
+  preserve_sources_list: true
+  sources:
+    ignored1:
+      source: "ppa:kelleyk/emacs"
+    ignored2:
+      source: "ppa:git-core/ppa"
+package_upgrade: true
+timezone: "America/New_York"
+packages:
+  - zsh
+  - build-essential
+  - git
+  - emacs27-nox
+  - tmux
+  - colorize
+  - ripgrep
+runcmd:
+  - curl -L https://raw.githubusercontent.com/ssegal/dotfiles/stuff/cloud-init/home-provision.bash | sudo -u ssegal /bin/bash
+
