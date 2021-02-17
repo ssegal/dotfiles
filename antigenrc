@@ -37,6 +37,6 @@ esac
 
 antigen theme ssegal/zsh-theme@stuff
 
-. $HOME/.antigenrc.local
+[[ -e $HOME/.antigenrc.local ]] && source $HOME/.antigenrc.local
 
 antigen apply

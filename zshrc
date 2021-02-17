@@ -9,7 +9,7 @@ antigen init $HOME/.antigenrc
 zstyle ":completion:*:commands" rehash 1
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 unsetopt share_history
-unalias run-help
+(( $+aliases[run-help] )) && unalias run-help
 autoload run-help
 alias help=run-help
 
@@ -17,13 +17,15 @@ alias help=run-help
 #ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 # Make it a function so that we don't interfere with the alias created by plugin
-function grep {
-    if (( $+commands[ggrep] )); then
-        ggrep $*
-    else
-        command grep $*
-    fi
-}
+if [[ $OSTYPE == darwin* ]]; then
+    function grep {
+        if (( $+commands[ggrep] )); then
+            ggrep $*
+        else
+            command grep $*
+        fi
+    }
+fi
 
 [[ -e "${HOME}/.iterm2_shell_integration.zsh" ]] && source "${HOME}/.iterm2_shell_integration.zsh"
 
