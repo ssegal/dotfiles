@@ -27,5 +27,5 @@ packages:
   - colorize
   - ripgrep
 runcmd:
-  - curl -L https://raw.githubusercontent.com/ssegal/dotfiles/stuff/cloud-init/home-provision.bash | sudo --set-home --non-interactive --user=ssegal /bin/bash
+  - curl -L https://raw.githubusercontent.com/ssegal/dotfiles/stuff/cloud-init/home-provision.sh | sudo --set-home --non-interactive --user=ssegal /bin/bash
 package_reboot_if_required: true
