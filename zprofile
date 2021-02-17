@@ -10,8 +10,6 @@ export PATH=$PATH:$HOME/go/bin
 
 export MANPATH="~/.local/share/man:/usr/share/man:/usr/local/share/man"
 export EMAIL="ssegal127@gmail.com"
-#export GIT_AUTHOR_NAME="Stephen Segal"
-#export GIT_COMMITTER_NAME="Stephen Segal"
 
 pkg_config_paths=(
     "~/.local/lib/pkgconfig" \
@@ -29,10 +27,9 @@ for i in $pkg_config_paths; do
 done
 export PKG_CONFIG_PATH="$pkg_config_paths_str$PKG_CONFIG_PATH"
 
-#export PKG_CONFIG_PATH="~/.local/lib/pkgconfig:/usr/local/lib/pkgconfig:/lib/pkgconfig:/lib/x86_64-linux-gnu/pkgconfig:/usr/lib/pkgconfig:/usr/lib/x86_64-linux-gnu/pkgconfig"
-
 export LANG=en_US.UTF-8
 
+export ALTERNATE_EDITOR=
 (( $+commands[emacsclient] )) && export EDITOR='emacsclient -t'
 
 export PATH="$HOME/.cargo/bin:$PATH"

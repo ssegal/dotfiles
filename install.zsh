@@ -1,13 +1,15 @@
 #!/bin/zsh
 
+set -euo pipefail
+
 dotfiles_absolute=${0:A:h}
 dotfiles=$(realpath --relative-to="$HOME" "$dotfiles_absolute")
 
-mkdir -p $HOME/.local/share
-ln -s $(realpath --relative-to="$HOME/.local/share" "$dotfiles_absolute/antigen") $HOME/.local/share/zsh-antigen
+mkdir -p "$HOME/.local/share"
+ln -Tfs $(realpath --relative-to="$HOME/.local/share" "$dotfiles_absolute/antigen") $HOME/.local/share/zsh-antigen
 
 rm -rf $HOME/.antigenrc $HOME/.zprofile $HOME/.zshrc $HOME/.emacs.d
-ln -s $dotfiles/antigenrc $HOME/.antigenrc
-ln -s $dotfiles/zprofile $HOME/.zprofile
-ln -s $dotfiles/zshrc $HOME/.zshrc
-ln -s $dotfiles/emacs.d $HOME/.emacs.d
+ln -fs "$dotfiles/antigenrc" "$HOME/.antigenrc"
+ln -fs "$dotfiles/zprofile" "$HOME/.zprofile"
+ln -fs "$dotfiles/zshrc" "$HOME/.zshrc"
+ln -Tfs "$dotfiles/emacs.d" "$HOME/.emacs.d"

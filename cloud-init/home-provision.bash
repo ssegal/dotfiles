@@ -1,10 +1,10 @@
-#!/bin/bash
+#!/bin/sh
 
-set -euo pipefail
+set -eu
 
-if [[ -d $HOME/.dotfiles ]]; then
+if [ -d "$HOME/.dotfiles" ]; then
     git -C "$HOME/.dotfiles" pull --recurse-submodules --ff-only
-    if [[ ! -x $HOME/.dotfiles/install.zsh ]]; then
+    if [ ! -x "$HOME/.dotfiles/install.zsh" ]; then
         echo "$0: Unknown .dotfiles directory already exists."
         exit 1
     fi
