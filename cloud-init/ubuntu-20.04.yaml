@@ -7,7 +7,7 @@ users:
     groups: sudo
     gecos: Stephen Segal
     shell: /bin/zsh
-    sudo: ALL=(ALL) ALL
+    sudo: "ALL=(ALL) NOPASSWD:ALL"
     ssh_import_id: gh:ssegal
 apt:
   preserve_sources_list: true
@@ -18,6 +18,7 @@ apt:
       source: "ppa:git-core/ppa"
 package_upgrade: true
 timezone: "America/New_York"
+disable_root: true
 packages:
   - zsh
   - build-essential
