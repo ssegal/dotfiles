@@ -4,7 +4,7 @@
 
 users:
   - name: ssegal
-    groups: sudo
+    groups: [dialout, cdrom, floppy, audio, video, plugdev, users, netdev, sudo]
     gecos: Stephen Segal
     shell: /bin/zsh
     sudo: "ALL=(ALL) NOPASSWD:ALL"
