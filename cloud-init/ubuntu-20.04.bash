@@ -14,7 +14,15 @@ echo "Setting timezone..."
 timedatectl --no-ask-password set-timezone "America/New_York"
 
 echo "Adding new packages..."
-apt-get install -yq zsh build-essential git emacs27-nox tmux colorize ripgrep
+apt-get install -yq \
+    zsh \
+    build-essential \
+    git \
+    emacs27-nox \
+    tmux \
+    colorize \
+    ripgrep \
+    pkg-config
 
 echo "Configuring ssegal user..."
 useradd \
