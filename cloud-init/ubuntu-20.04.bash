@@ -29,7 +29,7 @@ useradd \
     --comment "Stephen Segal" \
     --user-group \
     --create-home \
-    --groups sudo,dialout,cdrom,floppy,audio,video,plugdev,users,netdev \
+    --groups sudo,dialout,cdrom,floppy,audio,video,plugdev,users \
     --shell /bin/zsh \
     ssegal
 
