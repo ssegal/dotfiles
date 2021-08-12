@@ -42,4 +42,6 @@ fi
 export HISTSIZE=50000
 export SAVEHIST=2000
 
+export TZ=America/New_York
+
 [[ -e $HOME/.zprofile.local ]] && source $HOME/.zprofile.local
