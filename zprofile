@@ -4,7 +4,7 @@ if [[ $OSTYPE == linux* ]] && [[ $(lsb_release -is) == "Ubuntu" ]]; then
     emulate zsh
 fi
 
-[[ -d $HOME/.local/bin ]] && export PATH="$PATH:$HOME/.local/bin"
+[[ -d $HOME/.local/bin ]] && export PATH="$HOME/.local/bin:$PATH"
 
 export PATH=$PATH:$HOME/go/bin
 
