@@ -32,8 +32,6 @@ export LANG=en_US.UTF-8
 export ALTERNATE_EDITOR=
 (( $+commands[emacsclient] )) && export EDITOR='emacsclient -t'
 
-export PATH="$HOME/.cargo/bin:$PATH"
-
 (( $+commands[go] )) && export PATH="$PATH:$(go env GOPATH)"
 if [[ -d "$HOME/Library/Python/3.7/bin" ]]; then
     export PATH="$PATH:$HOME/Library/Python/3.7/bin"
