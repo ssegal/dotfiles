@@ -6,7 +6,10 @@ fi
 
 [[ -d $HOME/.local/bin ]] && export PATH="$HOME/.local/bin:$PATH"
 
-export PATH=$PATH:$HOME/go/bin
+if [[ -z $GOPATH && -d $HOME/go ]]; then
+    export PATH=$PATH:$HOME/go/bin
+    export GOPATH=$HOME/go
+fi
 
 export MANPATH="~/.local/share/man:/usr/share/man:/usr/local/share/man"
 export EMAIL="ssegal127@gmail.com"
