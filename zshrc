@@ -2,9 +2,9 @@
 # ssegal: Must do this before sourcing antigen
 [[ $OSTYPE == darwin* ]] && (( $+commands[gdircolors] )) && eval "$(gdircolors -b)"
 
-source $HOME/.local/share/zsh-antigen/antigen.zsh
+source ~/.antidote/antidote.zsh
 
-antigen init $HOME/.antigenrc
+antidote load
 
 zstyle ":completion:*:commands" rehash 1
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
