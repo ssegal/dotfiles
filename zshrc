@@ -2,9 +2,22 @@
 # ssegal: Must do this before sourcing antigen
 [[ $OSTYPE == darwin* ]] && (( $+commands[gdircolors] )) && eval "$(gdircolors -b)"
 
+if [[ -n $VSCODE_IPC_HOOK_CLI ]]; then
+    if [[ ! -o login ]]; then 
+        # source .zprofile even on non login shells
+        source ~/.zprofile
+    fi
+    helpers=$(dirname "$BROWSER")
+    bindir=$(dirname "$helpers")
+    path+=("$bindir/remote-cli")
+    export PATH
+fi
+
 source ~/.antidote/antidote.zsh
 
 antidote load
+
+typeset -U path
 
 zstyle ":completion:*:commands" rehash 1
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"

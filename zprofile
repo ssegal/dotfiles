@@ -1,9 +1,11 @@
 if [[ $OSTYPE == linux* ]] && [[ $(lsb_release -is) == "Ubuntu" ]]; then
-    emulate sh
-    . /etc/profile
-    emulate zsh
+    emulate sh -c ". /etc/profile"
 fi
 
+typeset -U path
+[[ -d ~/.local/bin ]] && path=("~/.local/bin" "$path[@]")
+
+export PATH
 export MANPATH="~/.local/share/man:/usr/share/man:/usr/local/share/man"
 export EMAIL="ssegal127@gmail.com"
 
