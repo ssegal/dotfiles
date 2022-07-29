@@ -2,31 +2,35 @@
 
 antigen use oh-my-zsh
 
-(( $+commands[git] )) && antigen bundle git
-antigen bundle history
-(( $+commands[emacs] )) && antigen bundle emacs
-(( $+commands[colorize] )) && antigen bundle colorize
-antigen bundle extract
-antigen bundle man
-(( $+commands[tmux] )) && antigen bundle tmux
-(( $+commands[rg] )) && antigen bundle ripgrep
 antigen bundle colored-man-pages
-(( $+commands[tig] )) && antigen bundle tig
+(( $+commands[colorize] )) && antigen bundle colorize
+(( $+commands[docker] )) && antigen bundle docker
+(( $+commands[emacs] )) && antigen bundle emacs
+antigen bundle extract
+(( $+commands[git] )) && antigen bundle git
+(( $+commands[git-lfs] )) && antigen bundle git-lfs
 (( $+commands[go] )) && antigen bundle golang
-(( $+commands[pip] )) && antigen bundle pip
+antigen bundle history 
 antigen bundle jira
-(( $+commands[rustup] )) && antigen bundle rustup
+antigen bundle man
+(( $+commands[pip] )) && antigen bundle pip
+(( $+commands[rg] )) && antigen bundle ripgrep
 (( $+commands[rustc] )) && antigen bundle rust
-(( $+commands[cargo] )) && antigen bundle cargo
-(( $+commands[code] )) && antigen bundle vscode
 (( $+commands[fuck] )) && antigen bundle thefuck
+(( $+commands[tig] )) && antigen bundle tig
+(( $+commands[tmux] )) && antigen bundle tmux
+(( $+commands[code] )) && antigen bundle vscode
 
+[[ $LC_TERMINAL == "iTerm2" ]] && antigen bundle iterm2
+
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-history-substring-search
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-completions
 
 case "$OSTYPE" in
     darwin*)
-        antigen bundle osx
+        antigen bundle macos
         (( $+commands[brew] )) && antigen bundle brew
         antigen bundle gnu-utils
         ;;

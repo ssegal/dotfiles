@@ -3,7 +3,9 @@ if [[ $OSTYPE == linux* ]] && [[ $(lsb_release -is) == "Ubuntu" ]]; then
 fi
 
 typeset -U path
+[[ -e /opt/homebrew/bin/brew ]] && path=("/opt/homebrew/bin" "$path[@]")
 [[ -d ~/.local/bin ]] && path=("~/.local/bin" "$path[@]")
+(( $+commands[python3] )) && path+=("$(python3 -m site --user-base)/bin")
 
 export PATH
 export MANPATH="~/.local/share/man:/usr/share/man:/usr/local/share/man"

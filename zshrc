@@ -13,11 +13,9 @@ if [[ -n $VSCODE_IPC_HOOK_CLI ]]; then
     export PATH
 fi
 
-source ~/.antidote/antidote.zsh
+source $HOME/.local/share/zsh-antigen/antigen.zsh
 
-antidote load
-
-typeset -U path
+antigen init $HOME/.antigenrc
 
 zstyle ":completion:*:commands" rehash 1
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
