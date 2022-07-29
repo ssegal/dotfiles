@@ -15,7 +15,6 @@ rm -rf \
     $HOME/.emacs.d \
     $HOME/.tmux.conf
 
-ln -fs "$(realpath --relative-to=\"$HOME/.local/share\" \"$dotfiles_absolute/zinit\")" "$HOME/.local/share/zinit"
 ln -fs "$dotfiles/antigenrc" "$HOME/.antigenrc"
 ln -fs "$dotfiles/zprofile" "$HOME/.zprofile"
 ln -fs "$dotfiles/zshrc" "$HOME/.zshrc"
