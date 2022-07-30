@@ -5,7 +5,9 @@ fi
 typeset -U path
 [[ -e /opt/homebrew/bin/brew ]] && path=("/opt/homebrew/bin" "$path[@]")
 [[ -d ~/.local/bin ]] && path=("~/.local/bin" "$path[@]")
+[[ -d $HOME/.cargo/bin ]] && path+=("$HOME/.cargo/bin")
 (( $+commands[python3] )) && path+=("$(python3 -m site --user-base)/bin")
+(( $+commands[go] )) && path+="$(go env GOPATH)/bin"
 
 export PATH
 export MANPATH="~/.local/share/man:/usr/share/man:/usr/local/share/man"
@@ -32,18 +34,9 @@ export LANG=en_US.UTF-8
 export ALTERNATE_EDITOR=
 (( $+commands[emacsclient] )) && export EDITOR='emacsclient -t'
 
-[[ -d $HOME/.cargo/bin ]] && export PATH="$HOME/.cargo/bin:$PATH"
-
-(( $+commands[go] )) && export PATH="$PATH:$(go env GOPATH)/bin"
-if [[ -d "$HOME/Library/Python/3.7/bin" ]]; then
-    export PATH="$PATH:$HOME/Library/Python/3.7/bin"
-fi
-
 export HISTSIZE=50000
 export SAVEHIST=2000
 
 export TZ=America/New_York
-
-[[ -d $HOME/.local/bin ]] && export PATH="$HOME/.local/bin:$PATH"
 
 [[ -e $HOME/.zprofile.local ]] && source $HOME/.zprofile.local
