@@ -8,10 +8,8 @@ antigen bundle colored-man-pages
 (( $+commands[emacs] )) && antigen bundle emacs
 antigen bundle extract
 (( $+commands[git] )) && antigen bundle git
-(( $+commands[git-lfs] )) && antigen bundle git-lfs
 (( $+commands[go] )) && antigen bundle golang
 antigen bundle history 
-antigen bundle jira
 antigen bundle man
 (( $+commands[pip] )) && antigen bundle pip
 (( $+commands[rg] )) && antigen bundle ripgrep
