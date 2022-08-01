@@ -14,7 +14,6 @@ antigen bundle man
 (( $+commands[pip] )) && antigen bundle pip
 (( $+commands[rg] )) && antigen bundle ripgrep
 (( $+commands[rustc] )) && antigen bundle rust
-(( $+commands[ssh-agent] )) && antigen bundle ssh-agent
 (( $+commands[thefuck] )) && antigen bundle thefuck
 (( $+commands[tmux] )) && antigen bundle tmux
 (( $+commands[code] )) && antigen bundle vscode
