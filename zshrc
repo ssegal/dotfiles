@@ -17,6 +17,12 @@ source $HOME/.local/share/zsh-antigen/antigen.zsh
 
 antigen init $HOME/.antigenrc
 
+# some plugins set these the old-fashioned way, which removes the deduplication
+# tag
+typeset -U path
+typeset -U pkg_config_path
+typeset -U manpath
+
 zstyle ":completion:*:commands" rehash 1
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 unsetopt share_history
@@ -25,7 +31,7 @@ autoload run-help
 alias help=run-help
 
 [[ $EMACS = t ]] && unsetopt zle
-#ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 [[ -e "${HOME}/.iterm2_shell_integration.zsh" ]] && source "${HOME}/.iterm2_shell_integration.zsh"
 

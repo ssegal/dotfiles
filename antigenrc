@@ -16,12 +16,10 @@ antigen bundle man
 (( $+commands[pip] )) && antigen bundle pip
 (( $+commands[rg] )) && antigen bundle ripgrep
 (( $+commands[rustc] )) && antigen bundle rust
+(( $+commands[ssh-agent] )) && antigen bundle ssh-agent
 (( $+commands[thefuck] )) && antigen bundle thefuck
-(( $+commands[tig] )) && antigen bundle tig
 (( $+commands[tmux] )) && antigen bundle tmux
 (( $+commands[code] )) && antigen bundle vscode
-
-[[ $LC_TERMINAL == "iTerm2" ]] && antigen bundle iterm2
 
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-history-substring-search

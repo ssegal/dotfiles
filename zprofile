@@ -3,31 +3,47 @@ if [[ $OSTYPE == linux* ]] && [[ $(lsb_release -is) == "Ubuntu" ]]; then
 fi
 
 typeset -U path
-[[ -e /opt/homebrew/bin/brew ]] && path=("/opt/homebrew/bin" "$path[@]")
-[[ -d ~/.local/bin ]] && path=("~/.local/bin" "$path[@]")
+[[ -d /opt/homebrew/bin ]] && path=("/opt/homebrew/bin" "$path[@]")
+[[ -d $HOME/.local/bin ]] && path=("$HOME/.local/bin" "$path[@]")
 [[ -d $HOME/.cargo/bin ]] && path+=("$HOME/.cargo/bin")
 (( $+commands[python3] )) && path+=("$(python3 -m site --user-base)/bin")
 (( $+commands[go] )) && path+="$(go env GOPATH)/bin"
 
 export PATH
-export MANPATH="~/.local/share/man:/usr/share/man:/usr/local/share/man"
+
+manpaths=(
+    "$HOME/.local/share/man" \
+    "/opt/homebrew/share/man" \
+    "/usr/local/share/man" \
+    "/usr/share/man")
+
+manpath=()
+typeset -U manpath
+for i in $manpaths; do
+    if [[ -d $i ]]; then
+        manpath+="$i"
+    fi
+done
+export MANPATH
+
 export EMAIL="ssegal127@gmail.com"
 
 pkg_config_paths=(
-    "~/.local/lib/pkgconfig" \
+    "$HOME/.local/lib/pkgconfig" \
+    "/opt/homebrew/lib/pkgconfig" \
     "/usr/local/lib/pkgconfig" \
     "/lib/pkgconfig" \
     "/lib/x86_64-linux-gnu/pkgconfig" \
     "/usr/lib/pkgconfig" \
     "/usr/lib/x86_64-linux-gnu/pkgconfig")
 
-pkg_config_paths_str=""
+typeset -TU PKG_CONFIG_PATH pkg_config_path=()
 for i in $pkg_config_paths; do
     if [[ -d $i ]]; then
-        pkg_config_paths_str+="$i:"
+        pkg_config_path+="$i"
     fi
 done
-export PKG_CONFIG_PATH="$pkg_config_paths_str$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH
 
 export LANG=en_US.UTF-8
 
