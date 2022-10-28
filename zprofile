@@ -2,8 +2,16 @@ if [[ $OSTYPE == linux* ]] && [[ $(lsb_release -is) == "Ubuntu" ]]; then
     emulate sh -c ". /etc/profile"
 fi
 
+if [[ -x /usr/local/bin/brew ]]; then
+    HOMEBREW_PREFIX="$(/usr/local/bin/brew --prefix)"
+elif [[ -x /opt/homebrew/bin/brew ]]; then
+    HOMEBREW_PREFIX="$(/opt/homebrew/bin/brew --prefix)"
+elif [[ -x /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+    HOMEBREW_PREFIX="$(/home/linuxbrew/.linuxbrew/bin/brew --prefix)"
+fi
+
 typeset -U path
-[[ -d /opt/homebrew/bin ]] && path=("/opt/homebrew/bin" "$path[@]")
+[[ -d $HOMEBREW_PREFIX ]] && path=("$HOMEBREW_PREFIX/bin" "$HOMEBREW_PREFIX/sbin" "$path[@]")
 [[ -d $HOME/.local/bin ]] && path=("$HOME/.local/bin" "$path[@]")
 [[ -d $HOME/.cargo/bin ]] && path+=("$HOME/.cargo/bin")
 (( $+commands[python3] )) && path+=("$(python3 -m site --user-base)/bin")
@@ -11,9 +19,15 @@ typeset -U path
 
 export PATH
 
+if [[ -n $HOMEBREW_PREFIX ]]; then
+    HOMEBREW_CELLAR="$(brew --cellar)"
+    HOMEBREW_REPOSITORY="$(brew --repository)"
+fi
+
+
 manpaths=(
     "$HOME/.local/share/man" \
-    "/opt/homebrew/share/man" \
+    "$HOMEBREW_PREFIX/share/man" \
     "/usr/local/share/man" \
     "/usr/share/man")
 
@@ -30,7 +44,7 @@ export EMAIL="ssegal127@gmail.com"
 
 pkg_config_paths=(
     "$HOME/.local/lib/pkgconfig" \
-    "/opt/homebrew/lib/pkgconfig" \
+    "$HOMEBREW_PREFIX/pkgconfig" \
     "/usr/local/lib/pkgconfig" \
     "/lib/pkgconfig" \
     "/lib/x86_64-linux-gnu/pkgconfig" \
