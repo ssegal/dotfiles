@@ -2,8 +2,20 @@
 
 set -euo pipefail
 
-#dotfiles_absolute=${0:A:h}
-#dotfiles=$(realpath --relative-to="$HOME" "$dotfiles_absolute")
+dotfiles_absolute=${0:A:h}
+
+realpath=realpath
+if [[ $OSTYPE == darwin* ]]; then
+    # MacOS realpath doesn't support --relative-to option
+    if (( $+commands[grealpath] )); then
+        realpath=grealpath
+    else
+        echo "GNU coreutils not found"
+        exit 1
+    fi
+fi
+
+dotfiles=$(${realpath} --relative-to="$HOME" "$dotfiles_absolute")
 
 #mkdir -p "$HOME/.local/share"
 #ln -Tfs $(realpath --relative-to="$HOME/.local/share" "$dotfiles_absolute/antigen") $HOME/.local/share/zsh-antigen
