@@ -1,0 +1,22 @@
+zmodule ssegal/zsh-theme --name ssegal-zsh-theme --source ssegal.zsh-theme
+zmodule input
+zmodule zsh-users/zsh-completions --fpath src
+zmodule zdharma-continuum/fast-syntax-highlighting
+zmodule zsh-users/zsh-autosuggestions
+zmodule zsh-users/zsh-history-substring-search
+zmodule ohmyzsh/ohmyzsh --root plugins/colored-man-pages
+zmodule git --if '(( $+commands[git] ))'
+zmodule ohmyzsh/ohmyzsh --root plugins/colorize --if '(( $+commands[colorize] ))'
+zmodule sorin-ionescu/prezto --root modules/docker --if '(( $+commands[docker] ))'
+zmodule sorin-ionescu/prezto --root modules/emacs --if '(( $+commands[emacs] ))'
+zmodule ohmyzsh/ohmyzsh --root plugins/golang --if '(( $+commands[go] ))'
+zmodule ohmyzsh/ohmyzsh --root plugins/ripgrep --if '(( $+commands[rg] ))'
+zmodule homebrew --if '(( $+commands[brew] ))'
+zmodule ohmyzsh/ohmyzsh --root plugins/vscode --if '(( $+commands[code] ))'
+zmodule sorin-ionescu/prezto --root modules/tmux --if '(( $+commands[tmux] ))'
+(( $+commands[lsb_release] )) && [[ $(lsb_release -is) == "Ubuntu" ]] && zmodule ohmyzsh/ohmyzsh --root plugins/ubuntu
+(( $+commands[systemctl] )) && zmodule ohmyzsh/ohmyzsh --root plugins/systemd
+[[ $OSTYPE == darwin* ]] && zmodule sorin-ionescu/prezto --root modules/gnu-utility
+
+zmodule utility
+zmodule completion

@@ -32,6 +32,7 @@ case "$OSTYPE" in
     linux*)
         (( $+commands[lsb_release] )) && [[ $(lsb_release -is) == "Ubuntu" ]] && antigen bundle ubuntu
         (( $+commands[systemctl] )) && antigen bundle systemd
+        ;;
 esac
 
 antigen theme ssegal/zsh-theme@stuff
