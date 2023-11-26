@@ -12,7 +12,7 @@ zmodule utility
 zmodule exa --if '(( $+commands[exa] )) || (( $+commands[eza] ))'
 zmodule ohmyzsh/ohmyzsh --root plugins/colorize --if '(( $+commands[colorize] ))'
 zmodule sorin-ionescu/prezto --root modules/docker --if '(( $+commands[docker] ))'
-zmodule sorin-ionescu/prezto --root modules/emacs --if '(( $+commands[emacs] ))'
+zmodule ohmyzsh/ohmyzsh --root plugins/emacs --if '(( $+commands[emacs] ))'
 zmodule ohmyzsh/ohmyzsh --root plugins/golang --if '(( $+commands[go] ))'
 zmodule ohmyzsh/ohmyzsh --root plugins/ripgrep --if '(( $+commands[rg] ))'
 zmodule homebrew --if '(( $+commands[brew] ))'
