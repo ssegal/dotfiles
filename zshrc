@@ -1,6 +1,12 @@
 
-# ssegal: Must do this before sourcing antigen
-[[ $OSTYPE == darwin* ]] && (( $+commands[gdircolors] )) && eval "$(gdircolors -b)"
+# ssegal: Must do this before sourcing zim
+if (( $+commands[gdircolors] )); then
+    eval "$(gdircolors -b)"
+    zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+elif (( $+commands[dircolors] )); then
+    eval "$(dircolors -b)"
+    zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+fi
 
 if [[ -n $VSCODE_IPC_HOOK_CLI ]]; then
     if [[ ! -o login ]]; then 
