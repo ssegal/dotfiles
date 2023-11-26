@@ -13,6 +13,20 @@ if [[ -n $VSCODE_IPC_HOOK_CLI ]]; then
     export PATH
 fi
 
+HISTFILE=~/.zsh_history
+HISTSIZE=50000
+SAVEHIST=10000
+setopt extended_history       # record timestamp of command in HISTFILE
+setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt hist_ignore_dups       # ignore duplicated commands history list
+setopt hist_ignore_space      # ignore commands that start with space
+setopt hist_verify            # show command with history expansion to user before running it
+setopt share_history          # share command history data
+setopt append_history
+setopt auto_cd
+setopt interactive_comments
+setopt extended_glob
+
 autoload -Uz compinit
 
 export ZIM_HOME=~/.zim
@@ -29,9 +43,6 @@ fi
 
 source ${ZIM_HOME}/init.zsh
 
-#source $HOME/.local/share/zsh-antigen/antigen.zsh
-
-#antigen init $HOME/.antigenrc
 
 # some plugins set these the old-fashioned way, which removes the deduplication
 # tag
@@ -41,10 +52,10 @@ typeset -U manpath
 
 zstyle ":completion:*:commands" rehash 1
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-unsetopt share_history
 (( $+aliases[run-help] )) && unalias run-help
-autoload run-help
+autoload -Uz run-help
 alias help=run-help
+
 
 [[ $EMACS = t ]] && unsetopt zle
 
