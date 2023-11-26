@@ -57,7 +57,6 @@ typeset -U pkg_config_path
 typeset -U manpath
 
 zstyle ":completion:*:commands" rehash 1
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 (( $+aliases[run-help] )) && unalias run-help
 autoload -Uz run-help
 alias help=run-help
