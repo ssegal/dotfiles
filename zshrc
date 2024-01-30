@@ -61,6 +61,7 @@ zstyle ":completion:*:commands" rehash 1
 autoload -Uz run-help
 alias help=run-help
 
+(( $+commands[thefuck] )) && eval $(thefuck --alias)
 
 [[ $EMACS = t ]] && unsetopt zle
 
