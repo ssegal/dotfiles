@@ -1,4 +1,4 @@
-zmodule ssegal/zsh-theme --name ssegal-zsh-theme --source ssegal.zsh-theme
+#zmodule ssegal/zsh-theme --name ssegal-zsh-theme --source ssegal.zsh-theme
 zmodule input
 zmodule zsh-users/zsh-completions --fpath src
 zmodule zdharma-continuum/fast-syntax-highlighting
@@ -8,6 +8,7 @@ zmodule ohmyzsh/ohmyzsh --root plugins/colored-man-pages
 zmodule git
 zmodule run-help
 zmodule utility
+zmodule joke/zim-starship
 [[ $OSTYPE == darwin* ]] && zmodule sorin-ionescu/prezto --root modules/gnu-utility
 zmodule exa --if '(( $+commands[exa] )) || (( $+commands[eza] ))'
 zmodule ohmyzsh/ohmyzsh --root plugins/colorize --if '(( $+commands[colorize] ))'

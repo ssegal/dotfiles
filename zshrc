@@ -35,6 +35,8 @@ setopt extended_glob
 
 autoload -Uz compinit
 
+export STARSHIP_CONFIG=~/.dotfiles/starship.toml
+
 export ZIM_HOME=~/.zim
 
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
@@ -48,7 +50,6 @@ if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
 fi
 
 source ${ZIM_HOME}/init.zsh
-
 
 # some plugins set these the old-fashioned way, which removes the deduplication
 # tag
