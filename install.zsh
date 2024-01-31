@@ -23,10 +23,12 @@ rm -rf \
     $HOME/.zshrc \
     $HOME/.emacs.d \
     $HOME/.tmux.conf \
-    $HOME/.zimrc
+    $HOME/.zimrc \
+    $HOME/.p10k.zsh
 
 ln -fs "$dotfiles/zprofile" "$HOME/.zprofile"
 ln -fs "$dotfiles/zshrc" "$HOME/.zshrc"
 ln -fs "$dotfiles/emacs.d" "$HOME/.emacs.d"
 ln -fs "$dotfiles/tmux.conf" "$HOME/.tmux.conf"
 ln -fs "$dotfiles/zimrc" "$HOME/.zimrc"
+ln -fs "$dotfiles/p10k.zsh" "$HOME/.p10k.zsh"
