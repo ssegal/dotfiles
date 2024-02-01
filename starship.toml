@@ -9,18 +9,23 @@ symbol = "  "
 
 [buf]
 symbol = " "
+disabled = true
 
 [c]
 symbol = " "
+disabled = true
 
 [conda]
 symbol = " "
+disabled = true
 
 [crystal]
 symbol = " "
+disabled = true
 
 [dart]
 symbol = " "
+disabled = true
 
 [directory]
 read_only = " 󰌾"
@@ -30,12 +35,15 @@ symbol = " "
 
 [elixir]
 symbol = " "
+disabled = true
 
 [elm]
 symbol = " "
+disabled = true
 
 [fennel]
 symbol = " "
+disabled = true
 
 [fossil_branch]
 symbol = " "
@@ -45,21 +53,26 @@ symbol = " "
 
 [golang]
 symbol = " "
+disabled = true
 
 [guix_shell]
 symbol = " "
+disabled = true
 
 [haskell]
 symbol = " "
+disabled = true
 
 [haxe]
 symbol = " "
+disabled = true
 
 [hg_branch]
 symbol = " "
 
 [hostname]
 ssh_symbol = " "
+format = "[(@$hostname)]($style)"
 
 [java]
 symbol = " "
@@ -161,6 +174,9 @@ symbol = " "
 
 [swift]
 symbol = " "
+
+[username]
+format = "[$user]($style)"
 
 [zig]
 symbol = " "
