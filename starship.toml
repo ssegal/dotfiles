@@ -72,7 +72,7 @@ symbol = " "
 
 [hostname]
 ssh_symbol = " "
-format = "[(@$hostname)]($style)"
+format = "[(@$hostname) ]($style)"
 
 [java]
 symbol = " "
