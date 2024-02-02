@@ -72,37 +72,46 @@ symbol = " "
 
 [hostname]
 ssh_symbol = " "
-format = "[(@$hostname) ]($style)"
 
 [java]
 symbol = " "
+disabled = true
 
 [julia]
 symbol = " "
+disabled = true
 
 [kotlin]
 symbol = " "
+disabled = true
 
 [lua]
 symbol = " "
+disabled = true
 
 [memory_usage]
 symbol = "󰍛 "
+disabled = true
 
 [meson]
 symbol = "󰔷 "
+disabled = true
 
 [nim]
 symbol = "󰆥 "
+disabled = true
 
 [nix_shell]
 symbol = " "
+disabled = true
 
 [nodejs]
 symbol = " "
+disabled = true
 
 [ocaml]
 symbol = " "
+disabled = true
 
 [os.symbols]
 Alpaquita = " "
@@ -147,36 +156,44 @@ Windows = "󰍲 "
 
 [package]
 symbol = "󰏗 "
+disabled = true
 
 [perl]
 symbol = " "
+disabled = true
 
 [php]
 symbol = " "
+disabled = true
 
 [pijul_channel]
 symbol = " "
+disabled = true
 
 [python]
 symbol = " "
+disabled = true
 
 [rlang]
 symbol = "󰟔 "
+disabled = true
 
 [ruby]
 symbol = " "
+disabled = true
 
 [rust]
 symbol = " "
+disabled = true
 
 [scala]
 symbol = " "
+disabled = true
 
 [swift]
 symbol = " "
-
-[username]
-format = "[$user]($style)"
+disabled = true
 
 [zig]
 symbol = " "
+disabled = true
