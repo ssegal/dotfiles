@@ -1,6 +1,6 @@
 #cloud-config
 
-# Configuration for Ubuntu 22.04 (focal)
+# Configuration for Ubuntu 22.04 (jammy)
 
 users:
   - name: ssegal
@@ -13,7 +13,7 @@ apt:
   preserve_sources_list: true
   sources:
     ignored1:
-      source: "ppa:kelleyk/emacs"
+      source: "ppa:ubuntuhandbook1/emacs"
     ignored2:
       source: "ppa:git-core/ppa"
 package_upgrade: true
@@ -24,7 +24,7 @@ packages:
   - zsh
   - build-essential
   - git
-  - emacs28-nox
+  - emacs-nox
   - tmux
   - colorize
   - ripgrep

@@ -3,7 +3,7 @@
 set -euo pipefail
 
 echo "Adding additional repositories..."
-add-apt-repository -y ppa:kelleyk/emacs
+add-apt-repository -y ppa:ubuntuhandbook1/emacs
 add-apt-repository -y ppa:git-core/ppa
 
 echo "Performing package upgrade..."
@@ -18,7 +18,7 @@ apt-get install -yq \
     zsh \
     build-essential \
     git \
-    emacs28-nox \
+    emacs-nox \
     tmux \
     colorize \
     ripgrep \
