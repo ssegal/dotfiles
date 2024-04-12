@@ -25,8 +25,14 @@ rm -rf \
     $HOME/.tmux.conf \
     $HOME/.zimrc
 
+if (( ! $+commands[starship] )); then
+    mkdir -p "$HOME/.local/bin"
+    curl -sS https://starship.rs/install.sh | sh -s -- -y -b "$HOME/.local/bin"
+fi
+
 ln -fs "$dotfiles/zprofile" "$HOME/.zprofile"
 ln -fs "$dotfiles/zshrc" "$HOME/.zshrc"
 ln -fs "$dotfiles/emacs.d" "$HOME/.emacs.d"
 ln -fs "$dotfiles/tmux.conf" "$HOME/.tmux.conf"
 ln -fs "$dotfiles/zimrc" "$HOME/.zimrc"
+
