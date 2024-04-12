@@ -1,6 +1,6 @@
 #cloud-config
 
-# Configuration for Ubuntu 20.04 (focal)
+# Configuration for Ubuntu 22.04 (focal)
 
 users:
   - name: ssegal
@@ -16,19 +16,23 @@ apt:
       source: "ppa:kelleyk/emacs"
     ignored2:
       source: "ppa:git-core/ppa"
-package_update: true
 package_upgrade: true
+package_update: true
 timezone: "America/New_York"
 disable_root: true
 packages:
   - zsh
   - build-essential
   - git
-  - emacs27-nox
+  - emacs28-nox
   - tmux
   - colorize
   - ripgrep
   - pkg-config
+  - procps
+  - curl
+  - file
+  - git
 runcmd:
   - curl -L https://raw.githubusercontent.com/ssegal/dotfiles/stuff/cloud-init/home-provision.sh | sudo --set-home --non-interactive --user=ssegal /bin/bash
 package_reboot_if_required: true
