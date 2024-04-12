@@ -1,199 +1,57 @@
-# Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
 # Don't add a blank line between shell prompts
 add_newline = false
 
-[aws]
-symbol = "  "
+format = """
+$username$hostname:$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$hg_branch\
+$docker_context\
+$sudo \
+$line_break\
+$status\
+$container\
+$shell\
+$character"""
 
-[buf]
-symbol = " "
-disabled = true
-
-[c]
-symbol = " "
-disabled = true
-
-[conda]
-symbol = " "
-disabled = true
-
-[crystal]
-symbol = " "
-disabled = true
-
-[dart]
-symbol = " "
-disabled = true
+[character]
+success_symbol = "❯"
 
 [directory]
-read_only = " 󰌾"
+truncation_length = 100
+#truncation_symbol = "…/"
 
 [docker_context]
-symbol = " "
-
-[elixir]
-symbol = " "
-disabled = true
-
-[elm]
-symbol = " "
-disabled = true
-
-[fennel]
-symbol = " "
-disabled = true
+format = '\[[$symbol$context]($style)\]'
 
 [fossil_branch]
-symbol = " "
+format = '\[[$symbol$branch]($style)\]'
 
 [git_branch]
-symbol = " "
+format = '\[[$symbol$branch]($style)\]'
 
-[golang]
-symbol = " "
-disabled = true
-
-[guix_shell]
-symbol = " "
-disabled = true
-
-[haskell]
-symbol = " "
-disabled = true
-
-[haxe]
-symbol = " "
-disabled = true
+[git_status]
+format = '([\[$all_status$ahead_behind\]]($style))'
 
 [hg_branch]
-symbol = " "
+format = '\[[$symbol$branch]($style)\]'
 
 [hostname]
-ssh_symbol = " "
+format = "[@$hostname]($style)"
+style = 'bold green'
+ssh_only = false
 
-[java]
-symbol = " "
-disabled = true
+[sudo]
+format = '\[[as $symbol]($style)\]'
 
-[julia]
-symbol = " "
-disabled = true
+[username]
+format = '[$user]($style)'
+style_user = 'bold green'
+show_always = true
 
-[kotlin]
-symbol = " "
-disabled = true
 
-[lua]
-symbol = " "
-disabled = true
-
-[memory_usage]
-symbol = "󰍛 "
-disabled = true
-
-[meson]
-symbol = "󰔷 "
-disabled = true
-
-[nim]
-symbol = "󰆥 "
-disabled = true
-
-[nix_shell]
-symbol = " "
-disabled = true
-
-[nodejs]
-symbol = " "
-disabled = true
-
-[ocaml]
-symbol = " "
-disabled = true
-
-[os.symbols]
-Alpaquita = " "
-Alpine = " "
-Amazon = " "
-Android = " "
-Arch = " "
-Artix = " "
-CentOS = " "
-Debian = " "
-DragonFly = " "
-Emscripten = " "
-EndeavourOS = " "
-Fedora = " "
-FreeBSD = " "
-Garuda = "󰛓 "
-Gentoo = " "
-HardenedBSD = "󰞌 "
-Illumos = "󰈸 "
-Linux = " "
-Mabox = " "
-Macos = " "
-Manjaro = " "
-Mariner = " "
-MidnightBSD = " "
-Mint = " "
-NetBSD = " "
-NixOS = " "
-OpenBSD = "󰈺 "
-openSUSE = " "
-OracleLinux = "󰌷 "
-Pop = " "
-Raspbian = " "
-Redhat = " "
-RedHatEnterprise = " "
-Redox = "󰀘 "
-Solus = "󰠳 "
-SUSE = " "
-Ubuntu = " "
-Unknown = " "
-Windows = "󰍲 "
-
-[package]
-symbol = "󰏗 "
-disabled = true
-
-[perl]
-symbol = " "
-disabled = true
-
-[php]
-symbol = " "
-disabled = true
-
-[pijul_channel]
-symbol = " "
-disabled = true
-
-[python]
-symbol = " "
-disabled = true
-
-[rlang]
-symbol = "󰟔 "
-disabled = true
-
-[ruby]
-symbol = " "
-disabled = true
-
-[rust]
-symbol = " "
-disabled = true
-
-[scala]
-symbol = " "
-disabled = true
-
-[swift]
-symbol = " "
-disabled = true
-
-[zig]
-symbol = " "
-disabled = true
