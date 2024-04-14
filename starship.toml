@@ -12,7 +12,9 @@ $git_metrics\
 $git_status\
 $hg_branch\
 $docker_context\
+$env_var \
 $sudo \
+$custom \
 $line_break\
 $status\
 $container\
@@ -34,6 +36,7 @@ format = '\[[$symbol$branch]($style)\]'
 
 [git_branch]
 format = '\[[$symbol$branch]($style)\]'
+style = 'bold yellow'
 
 [git_status]
 format = '([\[$all_status$ahead_behind\]]($style))'
@@ -54,4 +57,5 @@ format = '[$user]($style)'
 style_user = 'bold green'
 show_always = true
 
-
+[env_var.BBPATH]
+format = '\[[OE](bold blue)\]'
