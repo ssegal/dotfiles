@@ -70,7 +70,7 @@ rm -rf \
     "$HOME/.tmux.conf" \
     "$HOME/.zimrc"
 
-if ! command -v starship; then
+if ! command -v starship &> /dev/null; then
     mkdir -p "$HOME/.local/bin"
     curl -sS https://starship.rs/install.sh | sh -s -- -y -b "$HOME/.local/bin"
 fi
