@@ -81,3 +81,13 @@ ln -fs "$dotfiles/emacs.d" "$HOME/.emacs.d"
 ln -fs "$dotfiles/tmux.conf" "$HOME/.tmux.conf"
 ln -fs "$dotfiles/zimrc" "$HOME/.zimrc"
 
+if command -v zsh &> /dev/null; then
+    export ZIM_HOME="${HOME}/.zim"
+    # Download zimfw plugin manager if missing.
+    if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
+        mkdir -p "${ZIM_HOME}" && curl -sSL -o "${ZIM_HOME}/zimfw.zsh" \
+            https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+        zsh "${ZIM_HOME}"/zimfw.zsh -q install
+    fi
+fi
+
