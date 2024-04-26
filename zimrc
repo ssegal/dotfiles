@@ -15,7 +15,7 @@ zmodule ohmyzsh/ohmyzsh --root plugins/colorize --if '(( $+commands[colorize] ))
 zmodule sorin-ionescu/prezto --root modules/docker --if '(( $+commands[docker] ))'
 zmodule ohmyzsh/ohmyzsh --root plugins/emacs --if '(( $+commands[emacs] ))'
 zmodule ohmyzsh/ohmyzsh --root plugins/golang --if '(( $+commands[go] ))'
-zmodule ohmyzsh/ohmyzsh --root plugins/ripgrep --if '(( $+commands[rg] ))'
+#zmodule ohmyzsh/ohmyzsh --root plugins/ripgrep --if '(( $+commands[rg] ))'
 zmodule homebrew --if '(( $+commands[brew] ))'
 zmodule ohmyzsh/ohmyzsh --root plugins/vscode --if '(( $+commands[code] ))'
 zmodule sorin-ionescu/prezto --root modules/tmux --if '(( $+commands[tmux] ))'
