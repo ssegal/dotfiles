@@ -3,6 +3,8 @@
 # Don't add a blank line between shell prompts
 add_newline = false
 
+command_timeout = 2000
+
 format = """
 $username$hostname:$directory\
 $git_branch\
