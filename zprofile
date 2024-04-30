@@ -59,7 +59,10 @@ for i in $pkg_config_paths; do
 done
 export PKG_CONFIG_PATH
 
-export LANG=en_US.UTF-8
+# Containers may not have all locales
+if command -v locale &> /dev/null && locale -a | grep "en_US.UTF-8" &> /dev/null; then
+    export LANG=en_US.UTF-8
+fi
 
 fpath+=("$HOME/.local/share/zsh/completions")
 
