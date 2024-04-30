@@ -1,0 +1,15 @@
+#!/bin/bash
+
+shopt -s execfail
+
+# Try to use Visual Studio Code if we are running in the VSCode integrated
+# terminal, or if we're in a normal terminal at a local console.
+if [[ $TERM_PROGRAM == "vscode" ]] || [[ -z "$SSH_TTY" ]]; then
+    exec code --wait $@
+fi
+exec emacsclient -t $@
+exec nano $@
+exec vi $@
+echo "No editor tool found."
+
+

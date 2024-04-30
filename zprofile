@@ -1,4 +1,4 @@
-if [[ $OSTYPE == linux* ]] && [[ $(lsb_release -is) == "Ubuntu" ]]; then
+if [[ $OSTYPE == linux* ]] && [[ -e /etc/profile ]]; then
     emulate sh -c ". /etc/profile"
 fi
 
@@ -61,8 +61,11 @@ export PKG_CONFIG_PATH
 
 export LANG=en_US.UTF-8
 
+fpath+=("$HOME/.local/share/zsh/completions")
+
 export ALTERNATE_EDITOR=
 (( $+commands[emacsclient] )) && export EDITOR='emacsclient -t'
+(( $+commands[edit] )) && export EDITOR="edit"
 
 export HISTSIZE=50000
 export SAVEHIST=2000

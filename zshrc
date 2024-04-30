@@ -8,16 +8,17 @@ elif (( $+commands[dircolors] )); then
     zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 fi
 
-if [[ -n $VSCODE_IPC_HOOK_CLI ]]; then
-    if [[ ! -o login ]]; then 
-        # source .zprofile even on non login shells
-        source ~/.zprofile
-    fi
-    helpers=$(dirname "$BROWSER")
-    bindir=$(dirname "$helpers")
-    path+=("$bindir/remote-cli")
-    export PATH
-fi
+# I think this was a hack for VSCode in Linux.  Let's just comment out for now.
+# if [[ -n $VSCODE_IPC_HOOK_CLI ]]; then
+#     if [[ ! -o login ]]; then 
+#         # source .zprofile even on non login shells
+#         source ~/.zprofile
+#     fi
+#     helpers=$(dirname "$BROWSER")
+#     bindir=$(dirname "$helpers")
+#     path+=("$bindir/remote-cli")
+#     export PATH
+# fi
 
 HISTFILE=~/.zsh_history
 HISTSIZE=50000
@@ -36,7 +37,6 @@ setopt extended_glob
 autoload -Uz compinit
 
 export STARSHIP_CONFIG=~/.dotfiles/starship.toml
-
 export ZIM_HOME=~/.zim
 
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
