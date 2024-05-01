@@ -147,6 +147,14 @@ ln -fs "$dotfiles/tmux.conf" "$HOME/.tmux.conf"
 ln -fs "$dotfiles/zimrc" "$HOME/.zimrc"
 ln -fs $(relative_path "$HOME_BIN_DIR" "$dotfiles_absolute/bin/edit") "$HOME_BIN_DIR/edit"
 
+# Install SSH keys
+if [[ ! -e "$HOME/.ssh/authorized_keys" ]]; then
+    mkdir -p "$HOME/.ssh"
+    chmod 700 "$HOME/.ssh"
+    curl -sLS "https://github.com/ssegal.keys" > "$HOME/.ssh/authorized_keys"
+    chmod 600 "$HOME/.ssh/authorized_keys"
+fi
+
 if command_in_path zsh; then
     export ZIM_HOME="${HOME}/.zim"
     # Download zimfw plugin manager if missing.
