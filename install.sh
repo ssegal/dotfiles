@@ -88,7 +88,7 @@ mkdir -p "$HOME_BIN_DIR"
 
 # install some necessary tools if they're not present
 if command_in_path brew; then
-    brew install -q rg starship eza
+    brew install -q rg eza
 else
     # No homebrew, and we don't want to try to install it here because it'll
     # sudo (also it isn't supported on Linux AArch64).  So instead let's just
@@ -107,7 +107,7 @@ else
             ;;
         "Darwin arm64")
             ripgrep_triple=aarch64-apple-darwin
-            # There's no precompiled binary available for MacOS.
+            # There's no precompiled eza binary available for MacOS.
             ;;
         *)
             echo "Unsupported machine type"
@@ -123,9 +123,6 @@ else
         chmod +x $HOME_BIN_DIR/rg
         mkdir -p $HOME/.local/share/zsh/completions
         cp -f "$TEMPDIR/ripgrep-${ripgrep_tag}-${ripgrep_triple}/complete/_rg" "$HOME/.local/share/zsh/completions"
-    fi
-    if ! command_in_path starship; then
-        curl -sLS https://starship.rs/install.sh | sh -s -- -y -b "$HOME_BIN_DIR"
     fi
     if ! command_in_path eza && [[ -n ${eza_triple} ]]; then
         eza_tag=$(get_latest_release_tag eza-community/eza)
