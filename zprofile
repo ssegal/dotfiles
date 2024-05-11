@@ -24,22 +24,6 @@ if [[ -n $HOMEBREW_PREFIX ]]; then
     HOMEBREW_REPOSITORY="$(brew --repository)"
 fi
 
-
-manpaths=(
-    "$HOME/.local/share/man" \
-    "$HOMEBREW_PREFIX/share/man" \
-    "/usr/local/share/man" \
-    "/usr/share/man")
-
-manpath=()
-typeset -U manpath
-for i in $manpaths; do
-    if [[ -d $i ]]; then
-        manpath+="$i"
-    fi
-done
-export MANPATH
-
 export EMAIL="ssegal127@gmail.com"
 
 pkg_config_paths=(
