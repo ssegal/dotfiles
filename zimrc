@@ -1,5 +1,6 @@
 zmodule git-info
 zmodule prompt-pwd
+zmodule termtitle
 zmodule ssegal/zsh-theme --name ssegal-zsh-theme --source ssegal.zsh-theme
 zmodule input
 zmodule zsh-users/zsh-completions --fpath src
