@@ -36,7 +36,6 @@ setopt extended_glob
 
 autoload -Uz compinit
 
-export STARSHIP_CONFIG=~/.dotfiles/starship.toml
 export ZIM_HOME=~/.zim
 
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
@@ -69,3 +68,6 @@ alias help=run-help
 [[ -e "${HOME}/.iterm2_shell_integration.zsh" ]] && source "${HOME}/.iterm2_shell_integration.zsh"
 
 [[ -e ${HOME}/.zshrc.local ]] && source "${HOME}/.zshrc.local"
+
+# Clear last errorcode.
+true

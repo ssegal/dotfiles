@@ -43,11 +43,6 @@ for i in $pkg_config_paths; do
 done
 export PKG_CONFIG_PATH
 
-# Containers may not have all locales
-if command -v locale &> /dev/null && locale -a | grep "en_US.UTF-8" &> /dev/null; then
-    export LANG=en_US.UTF-8
-fi
-
 fpath+=("$HOME/.local/share/zsh/completions")
 
 export ALTERNATE_EDITOR=
@@ -59,4 +54,7 @@ export SAVEHIST=2000
 
 export TZ=America/New_York
 
-[[ -e $HOME/.zprofile.local ]] && source $HOME/.zprofile.local
+[[ -e $HOME/.zprofile.local ]] && source "$HOME/.zprofile.local"
+
+# Clear last errorcode.
+true

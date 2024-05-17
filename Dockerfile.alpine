@@ -8,4 +8,4 @@ USER testuser
 WORKDIR /home/testuser
 RUN mkdir -p /home/testuser/.dotfiles
 
-CMD /bin/ash
+CMD ["/bin/ash", "-l"]

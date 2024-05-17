@@ -8,5 +8,4 @@ USER testuser
 WORKDIR /home/testuser
 RUN mkdir -p /home/testuser/.dotfiles
 
-
-CMD /bin/bash
+CMD ["/bin/bash", "-l"]
