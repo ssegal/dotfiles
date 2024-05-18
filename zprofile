@@ -45,19 +45,9 @@ export PKG_CONFIG_PATH
 
 fpath+=("$HOME/.local/share/zsh/completions")
 
-# Try to use Visual Studio Code if we are running in the VSCode integrated
-# terminal, or if we're in a normal terminal at a local console.  Otherwise try
-# Emacs, then nano.  If none of these exist, then leave EDITOR blank so the
-# system default editor (probably vi) is used.
-if (( $+commands[code] )) && ( [[ $TERM_PROGRAM == "vscode" ]] || [[ -z "$SSH_TTY" ]] ); then
-    export EDITOR="code --wait"
-elif (( %+commands[emacsclient] )); then
-    export ALTERNATE_EDITOR=
-    export EDITOR="emacsclient -t"
-elif (( %+commands[nano] )); then
-    export EDITOR="nano"
-fi
-
+export ALTERNATE_EDITOR=
+(( $+commands[emacsclient] )) && export EDITOR='emacsclient -t'
+(( $+commands[edit] )) && export EDITOR="edit"
 
 export HISTSIZE=50000
 export SAVEHIST=2000
