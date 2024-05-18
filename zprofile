@@ -51,10 +51,10 @@ fpath+=("$HOME/.local/share/zsh/completions")
 # system default editor (probably vi) is used.
 if (( $+commands[code] )) && ( [[ $TERM_PROGRAM == "vscode" ]] || [[ -z "$SSH_TTY" ]] ); then
     export EDITOR="code --wait"
-elif (( %+commands[emacsclient] )); then
+elif (( $+commands[emacsclient] )); then
     export ALTERNATE_EDITOR=
     export EDITOR="emacsclient -t"
-elif (( %+commands[nano] )); then
+elif (( $+commands[nano] )); then
     export EDITOR="nano"
 fi
 
