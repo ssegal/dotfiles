@@ -39,6 +39,9 @@ autoload -Uz compinit
 export ZIM_HOME=~/.zim
 export ZSH_CACHE_DIR=~/.local/share/zsh
 
+zstyle :omz:plugins:ssh-agent agent-forwarding yes
+zstyle :omz:plugins:ssh-agent lazy yes
+
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
     curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
         https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh

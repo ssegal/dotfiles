@@ -9,19 +9,22 @@ zmodule zsh-users/zsh-autosuggestions
 zmodule zsh-users/zsh-history-substring-search
 zmodule git
 zmodule run-help
+[[ $OSTYPE == darwin* ]] && zmodule ohmyzsh/ohmyzsh --root plugins/gnu-utils
 zmodule utility
-[[ $OSTYPE == darwin* ]] && zmodule sorin-ionescu/prezto --root modules/gnu-utility
 zmodule exa --if '(( $+commands[exa] )) || (( $+commands[eza] ))'
 zmodule ohmyzsh/ohmyzsh --root plugins/colorize --if '(( $+commands[chroma] )) || (($+commands[pygmentize] ))'
-zmodule sorin-ionescu/prezto --root modules/docker --if '(( $+commands[docker] ))'
+zmodule akarzim/zsh-docker-aliases --if '(( $+commands[docker] ))'
 zmodule ohmyzsh/ohmyzsh --root plugins/emacs --if '(( $+commands[emacs] ))'
 zmodule ohmyzsh/ohmyzsh --root plugins/golang --if '(( $+commands[go] ))'
 zmodule homebrew --if '(( $+commands[brew] ))'
 zmodule ohmyzsh/ohmyzsh --root plugins/vscode --if '(( $+commands[code] ))'
-zmodule sorin-ionescu/prezto --root modules/tmux --if '(( $+commands[tmux] ))'
 zmodule ohmyzsh/ohmyzsh --root plugins/rust --if '(( $+commands[cargo] ))'
 zmodule ohmyzsh/ohmyzsh --root plugins/command-not-found
 zmodule ohmyzsh/ohmyzsh --root plugins/aliases
 zmodule ohmyzsh/ohmyzsh --root plugins/hitchhiker
+zmodule ohmyzsh/ohmyzsh --root plugins/ssh-agent
 (( $+commands[systemctl] )) && zmodule ohmyzsh/ohmyzsh --root plugins/systemd
 zmodule completion
+
+# This module needs to be after completion is installed since it calls compdef directly.
+zmodule ohmyzsh/ohmyzsh --root plugins/tmux --if '(( $+commands[tmux] ))'
