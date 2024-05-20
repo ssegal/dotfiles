@@ -43,6 +43,7 @@ for i in $pkg_config_paths; do
 done
 export PKG_CONFIG_PATH
 
+mkdir -p "$HOME/.local/share/zsh/completions"
 fpath+=("$HOME/.local/share/zsh/completions")
 
 export ALTERNATE_EDITOR=

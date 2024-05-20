@@ -37,6 +37,7 @@ setopt extended_glob
 autoload -Uz compinit
 
 export ZIM_HOME=~/.zim
+export ZSH_CACHE_DIR=~/.local/share/zsh
 
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
     curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
@@ -49,6 +50,11 @@ if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
 fi
 
 source ${ZIM_HOME}/init.zsh
+
+# Completion for tools provided with Docker Desktop.
+(( $+commands[docker] )) && source <(docker completion zsh)
+(( $+commands[hub-tool] )) && source <(hub-tool completion zsh)
+(( $+commands[kubectl] )) && source <(kubectl completion zsh)
 
 # some plugins set these the old-fashioned way, which removes the deduplication
 # tag

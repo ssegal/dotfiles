@@ -7,20 +7,21 @@ zmodule zsh-users/zsh-completions --fpath src
 zmodule zdharma-continuum/fast-syntax-highlighting
 zmodule zsh-users/zsh-autosuggestions
 zmodule zsh-users/zsh-history-substring-search
-zmodule ohmyzsh/ohmyzsh --root plugins/colored-man-pages
 zmodule git
 zmodule run-help
 zmodule utility
-#zmodule joke/zim-starship
 [[ $OSTYPE == darwin* ]] && zmodule sorin-ionescu/prezto --root modules/gnu-utility
 zmodule exa --if '(( $+commands[exa] )) || (( $+commands[eza] ))'
-zmodule ohmyzsh/ohmyzsh --root plugins/colorize --if '(( $+commands[colorize] ))'
+zmodule ohmyzsh/ohmyzsh --root plugins/colorize --if '(( $+commands[chroma] )) || (($+commands[pygmentize] ))'
 zmodule sorin-ionescu/prezto --root modules/docker --if '(( $+commands[docker] ))'
 zmodule ohmyzsh/ohmyzsh --root plugins/emacs --if '(( $+commands[emacs] ))'
 zmodule ohmyzsh/ohmyzsh --root plugins/golang --if '(( $+commands[go] ))'
-#zmodule ohmyzsh/ohmyzsh --root plugins/ripgrep --if '(( $+commands[rg] ))'
 zmodule homebrew --if '(( $+commands[brew] ))'
 zmodule ohmyzsh/ohmyzsh --root plugins/vscode --if '(( $+commands[code] ))'
 zmodule sorin-ionescu/prezto --root modules/tmux --if '(( $+commands[tmux] ))'
+zmodule ohmyzsh/ohmyzsh --root plugins/rust --if '(( $+commands[cargo] ))'
+zmodule ohmyzsh/ohmyzsh --root plugins/command-not-found
+zmodule ohmyzsh/ohmyzsh --root plugins/aliases
+zmodule ohmyzsh/ohmyzsh --root plugins/hitchhiker
 (( $+commands[systemctl] )) && zmodule ohmyzsh/ohmyzsh --root plugins/systemd
 zmodule completion
