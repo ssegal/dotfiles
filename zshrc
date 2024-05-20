@@ -54,10 +54,7 @@ fi
 
 source ${ZIM_HOME}/init.zsh
 
-# Completion for tools provided with Docker Desktop.
 (( $+commands[docker] )) && source <(docker completion zsh)
-(( $+commands[hub-tool] )) && source <(hub-tool completion zsh)
-(( $+commands[kubectl] )) && source <(kubectl completion zsh)
 
 # some plugins set these the old-fashioned way, which removes the deduplication
 # tag
