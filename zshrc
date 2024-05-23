@@ -54,8 +54,6 @@ fi
 
 source ${ZIM_HOME}/init.zsh
 
-(( $+commands[docker] )) && source <(docker completion zsh)
-
 # some plugins set these the old-fashioned way, which removes the deduplication
 # tag
 typeset -U path
@@ -66,6 +64,10 @@ zstyle ":completion:*:commands" rehash 1
 (( $+aliases[run-help] )) && unalias run-help
 autoload -Uz run-help
 alias help=run-help
+
+if (( $+commands[bat] )); then
+    alias cat='bat --paging=never --style=plain'
+fi
 
 (( $+commands[thefuck] )) && eval $(thefuck --alias)
 

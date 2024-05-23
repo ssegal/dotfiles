@@ -13,7 +13,7 @@ zmodule run-help
 zmodule utility
 zmodule exa --if '(( $+commands[exa] )) || (( $+commands[eza] ))'
 zmodule ohmyzsh/ohmyzsh --root plugins/colorize --if '(( $+commands[chroma] )) || (($+commands[pygmentize] ))'
-zmodule akarzim/zsh-docker-aliases --if '(( $+commands[docker] ))'
+zmodule ohmyzsh/ohmyzsh --root plugins/docker --if '(( $+commands[docker] ))'
 zmodule ohmyzsh/ohmyzsh --root plugins/emacs --if '(( $+commands[emacs] ))'
 zmodule ohmyzsh/ohmyzsh --root plugins/golang --if '(( $+commands[go] ))'
 zmodule homebrew --if '(( $+commands[brew] ))'
@@ -23,6 +23,9 @@ zmodule ohmyzsh/ohmyzsh --root plugins/command-not-found
 zmodule ohmyzsh/ohmyzsh --root plugins/aliases
 zmodule ohmyzsh/ohmyzsh --root plugins/hitchhiker
 zmodule ohmyzsh/ohmyzsh --root plugins/ssh-agent
+zmodule ohmyzsh/ohmyzsh --root plugins/emoji
+zmodule ohmyzsh/ohmyzsh --root plugins/fzf --if '(( $+commands[fzf] ))'
+zmodule ohmyzsh/ohmyzsh --root plugins/gh --if '(( $+commands[gh] ))'
 (( $+commands[systemctl] )) && zmodule ohmyzsh/ohmyzsh --root plugins/systemd
 zmodule completion
 
