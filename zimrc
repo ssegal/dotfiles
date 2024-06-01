@@ -21,11 +21,11 @@ zmodule ohmyzsh/ohmyzsh --root plugins/vscode --if '(( $+commands[code] ))'
 zmodule ohmyzsh/ohmyzsh --root plugins/rust --if '(( $+commands[cargo] ))'
 zmodule ohmyzsh/ohmyzsh --root plugins/command-not-found
 zmodule ohmyzsh/ohmyzsh --root plugins/aliases
-zmodule ohmyzsh/ohmyzsh --root plugins/hitchhiker
 zmodule ohmyzsh/ohmyzsh --root plugins/ssh-agent
 zmodule ohmyzsh/ohmyzsh --root plugins/emoji
 zmodule ohmyzsh/ohmyzsh --root plugins/fzf --if '(( $+commands[fzf] ))'
 zmodule ohmyzsh/ohmyzsh --root plugins/gh --if '(( $+commands[gh] ))'
+zmodule ohmyzsh/ohmyzsh --root plugins/history
 (( $+commands[systemctl] )) && zmodule ohmyzsh/ohmyzsh --root plugins/systemd
 zmodule completion
 
