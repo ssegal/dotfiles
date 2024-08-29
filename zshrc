@@ -20,6 +20,9 @@ fi
 #     export PATH
 # fi
 
+# Allow HEAD^ to work in git
+setopt NO_NOMATCH
+
 HISTFILE=~/.zsh_history
 HISTSIZE=50000
 SAVEHIST=10000
