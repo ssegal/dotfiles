@@ -11,6 +11,7 @@ zmodule git
 zmodule run-help
 [[ $OSTYPE == darwin* ]] && zmodule ohmyzsh/ohmyzsh --root plugins/gnu-utils
 zmodule utility
+zmodule k --if '(( $+commands[kubectl] ))'
 zmodule exa --if '(( $+commands[exa] )) || (( $+commands[eza] ))'
 zmodule ohmyzsh/ohmyzsh --root plugins/colorize --if '(( $+commands[chroma] )) || (($+commands[pygmentize] ))'
 zmodule ohmyzsh/ohmyzsh --root plugins/docker --if '(( $+commands[docker] ))'

@@ -73,7 +73,6 @@ if (( $+commands[bat] )); then
 fi
 
 (( $+commands[thefuck] )) && eval $(thefuck --alias)
-(( $+commands[kubectl] )) && eval $(kubectl completion zsh)
 
 [[ $EMACS = t ]] && unsetopt zle
 
