@@ -30,5 +30,6 @@ zmodule ohmyzsh/ohmyzsh --root plugins/history
 (( $+commands[systemctl] )) && zmodule ohmyzsh/ohmyzsh --root plugins/systemd
 zmodule completion
 
-# This module needs to be after completion is installed since it calls compdef directly.
+# These modules need to be after completion is installed.
 zmodule ohmyzsh/ohmyzsh --root plugins/tmux --if '(( $+commands[tmux] ))'
+zmodule ohmyzsh/ohmyzsh --root plugins/gcloud --if '(( $+commands[gcloud] ))'
