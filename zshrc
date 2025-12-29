@@ -73,6 +73,7 @@ if (( $+commands[bat] )); then
 fi
 
 (( $+commands[thefuck] )) && eval $(thefuck --alias)
+(( $+commands[mcfly] )) && eval "$(mcfly init zsh)"
 
 [[ $EMACS = t ]] && unsetopt zle
 
