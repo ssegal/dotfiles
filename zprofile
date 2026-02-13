@@ -56,7 +56,7 @@ export SAVEHIST=2000
 export TZ=America/New_York
 
 if (( $+commands[batpipe] )); then
-    export LESSOPEN="|$(whence batpipe) %s";
+    export LESSOPEN="|$(whence batpipe) -p %s";
     export LESS="$LESS -R";
     export BATPIPE="color";
 fi

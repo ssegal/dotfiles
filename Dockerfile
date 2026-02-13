@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 RUN apt-get -y update && apt-get -y install curl zsh sudo git
 RUN useradd -ms /bin/bash testuser

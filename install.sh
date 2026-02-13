@@ -86,58 +86,37 @@ rm -rf \
 
 HOME_BIN_DIR="$HOME/.local/bin"
 mkdir -p "$HOME_BIN_DIR"
-# install some necessary tools if they're not present
+
 if command_in_path brew; then
-    echo "*** Installing extra tools via Homebrew"
-    brew install -q rg eza
+    echo "*** Existing homebrew found!"
+    HOMEBREW_PREFIX="$(brew --prefix)"
 else
-    # No homebrew, and we don't want to try to install it here because it'll
-    # sudo (also it isn't supported on Linux AArch64).  So instead let's just
-    # download what we need manually.
-    echo "*** Installing extra tools"
-    TEMPDIR=$(mktemp -d)
-    trap 'rm -rf ${TEMPDIR}' EXIT
-
-    case "$(uname -sm)" in
-        "Linux aarch64")
-            ripgrep_triple=aarch64-unknown-linux-gnu
-            eza_triple=aarch64-unknown-linux-gnu
-            ;;
-        "Linux x86_64")
-            ripgrep_triple=x86_64-unknown-linux-musl
-            eza_triple=x86_64-unknown-linux-gnu
-            ;;
-        "Darwin arm64")
-            ripgrep_triple=aarch64-apple-darwin
-            # There's no precompiled eza binary available for MacOS.
-            ;;
-        *)
-            echo "Unsupported machine type"
-            exit 1
-            ;;
-    esac
-
-    if ! command_in_path rg; then
-        echo "*** Downloading rg"
-        ripgrep_tag=$(get_latest_release_tag BurntSushi/ripgrep)
-        curl -sLS "https://github.com/BurntSushi/ripgrep/releases/download/${ripgrep_tag}/ripgrep-${ripgrep_tag}-${ripgrep_triple}.tar.gz" | \
-            tar xz -C "$TEMPDIR"
-        cp -f "$TEMPDIR/ripgrep-${ripgrep_tag}-${ripgrep_triple}/rg" "$HOME_BIN_DIR"
-        chmod +x $HOME_BIN_DIR/rg
-        mkdir -p $HOME/.local/share/zsh/completions
-        cp -f "$TEMPDIR/ripgrep-${ripgrep_tag}-${ripgrep_triple}/complete/_rg" "$HOME/.local/share/zsh/completions"
+    # install homebrew
+    echo "*** Installing homebrew"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    if [ -x "/usr/local/bin/brew" ]; then
+        HOMEBREW_PREFIX="$(/usr/local/bin/brew --prefix)"
+    elif [ -x "/opt/homebrew/bin/brew" ]; then
+        HOMEBREW_PREFIX="$(/opt/homebrew/bin/brew --prefix)"
+    elif [ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
+        HOMEBREW_PREFIX="$(/home/linuxbrew/.linuxbrew/bin/brew --prefix)"
     fi
-    if ! command_in_path eza && [ -n "${eza_triple}" ]; then
-        echo "*** Downloading eza"
-        eza_tag=$(get_latest_release_tag eza-community/eza)
-        eza_version=${eza_tag#?}
-        curl -sLS "https://github.com/eza-community/eza/releases/download/${eza_tag}/eza_${eza_triple}.tar.gz" | \
-            tar xz -C "$HOME_BIN_DIR" ./eza
-        chmod +x $HOME_BIN_DIR/eza
-        curl -sLS "https://github.com/eza-community/eza/releases/download/${eza_tag}/completions-${eza_version}.tar.gz" | \
-            tar xz -C "$TEMPDIR"
-        mkdir -p $HOME/.local/share/zsh/completions
-        cp -f "$TEMPDIR/target/completions-${eza_version}/_eza" "$HOME/.local/share/zsh/completions"
+fi
+
+echo "*** Installing extra tools via Homebrew"
+"$HOMEBREW_PREFIX"/bin/brew install -q rg eza bat bat-extras mcfly fzf lazygit fd
+
+# zsh is the default shell in MacOS, so no need to install.  For Linux, on the
+# other hand, we want to use the system's zsh install so we can make it the
+# default shell.
+if [ ! -x /bin/zsh ]; then
+    if command_in_path apt-get; then
+        sudo apt-get install -y zsh
+    elif command_in_path dnf; then
+        sudo dnf install -y zsh
+    else
+        echo "zsh unavailable!"
+        exit 1
     fi
 fi
 
@@ -161,13 +140,17 @@ elif [ ! -e "$HOME/.ssh/authorized_keys" ]; then
     chmod 600 "$HOME/.ssh/authorized_keys"
 fi
 
-if command_in_path zsh; then
-    echo "*** Installing Zim"
-    export ZIM_HOME="${HOME}/.zim"
-    # Download zimfw plugin manager if missing.
-    if [ ! -e "${ZIM_HOME}/zimfw.zsh" ]; then
-        mkdir -p "${ZIM_HOME}" && curl -sSL -o "${ZIM_HOME}/zimfw.zsh" \
-            https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
-        zsh "${ZIM_HOME}"/zimfw.zsh install -q
-    fi
+echo "*** Installing Zim"
+export ZIM_HOME="${HOME}/.zim"
+# Download zimfw plugin manager if missing.
+if [ ! -e "${ZIM_HOME}/zimfw.zsh" ]; then
+    mkdir -p "${ZIM_HOME}" && curl -sSL -o "${ZIM_HOME}/zimfw.zsh" \
+        https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+    zsh "${ZIM_HOME}"/zimfw.zsh install -q
 fi
+
+echo "*** Setting login shell to zsh"
+sudo chsh $(whoami) -s /bin/zsh
+
+echo "*** DONE!"
+
