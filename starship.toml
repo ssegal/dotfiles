@@ -1,5 +1,20 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 add_newline = false
+format = """
+${custom.root}\
+$hostname\
+$directory\
+$vcs\
+$package\
+$line_break\
+$container\
+$character\
+"""
+
+[custom.root]
+when = ''' test "$USER" = "root" '''
+format = "[root]($style)@"
+style = "bold red"
 
 [aws]
 format = '\[[$symbol($profile)(\($region\))(\[$duration\])]($style)\]'
@@ -164,7 +179,7 @@ format = '\[[$symbol$branch]($style)\]'
 disabled = true
 
 [hostname]
-format = '[$ssh_symbol($hostname)]($style):'
+format = '[$hostname]($style):'
 style = "bold green"
 ssh_only = false
 
