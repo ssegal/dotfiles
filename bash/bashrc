@@ -1,28 +1,29 @@
 # shellcheck shell=bash
 
-SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
-
-# shellcheck disable=SC1091
-source "${SCRIPT_DIR}/lib/utils.bash"
-
 # in .bashrc, near the top
 case $- in
   *i*) ;;
     *) return ;;
 esac
 
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+
+# shellcheck disable=SC1091
+source "${SCRIPT_DIR}/lib/utils.bash"
+
 export HISTSIZE=50000
 export HISTFILESIZE=10000
 export HISTCONTROL="ignoreboth"
-export HISTTIMEFORMAT="%F %r %Z "
+export HISTTIMEFORMAT="%F %r %Z  "
 export PS1='\[\e[01;32m\]\h\[\e[0m\]:\[\e[01;34m\]\w\[\e[0m\]\n\$ '
 export LANG=en_US.UTF-8
 [[ -z "${USER:-}" ]] && export USER="$(id -un)"
 
 shopt -s histappend autocd checkhash cdspell extglob histverify
-eval "$(starship init bash)"
+command_exists starship && eval "$(starship init bash)"
+
 # shellcheck disable=SC1090
-source -- ~/.local/share/blesh/ble.sh --rcfile "${SCRIPT_DIR}/blerc"
+source_if_exists ~/.local/share/blesh/ble.sh --rcfile "${SCRIPT_DIR}/blerc"
 
 # additional aliases
 if command_exists eza; then

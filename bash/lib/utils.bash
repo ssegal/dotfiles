@@ -11,6 +11,11 @@ command_exists() {
     return 0
 }
 
+source_if_exists() {
+    # shellcheck disable=SC1090
+    [[ -r $1 ]] && source -- "$@"
+}
+
 dedup_path_var() {
     local var_name="$1"
     # Get the current value of the variable dynamically
