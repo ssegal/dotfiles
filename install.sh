@@ -72,6 +72,7 @@ REALPATH="realpath"
 GREP="grep"
 LN="ln"
 [ -z "${LANG:-}" ] && export LANG=en_US.UTF-8
+# shellcheck disable=SC2155
 [ -z "${USER:-}" ] && export USER="$(id -un)"
 
 if [ -n "${HOMEBREW_PREFIX:-}" ]; then
@@ -84,7 +85,7 @@ if [ -n "${HOMEBREW_PREFIX:-}" ]; then
         GREP="ggrep"
         LN="gln"
         LOGIN_BASH="$HOMEBREW_PREFIX/bin/bash"
-        if ! ${GREP} -Fq "${BASH} /etc/shells"; then
+        if ! ${GREP} -Fq "${LOGIN_BASH}" "/etc/shells"; then
             echo "${LOGIN_BASH}" | sudo tee -a /etc/shells > /dev/null
         fi
         sudo chsh "$(whoami)" -s "$BASH"

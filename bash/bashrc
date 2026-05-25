@@ -17,6 +17,7 @@ export HISTCONTROL="ignoreboth"
 export HISTTIMEFORMAT="%F %r %Z  "
 export PS1='\[\e[01;32m\]\h\[\e[0m\]:\[\e[01;34m\]\w\[\e[0m\]\n\$ '
 export LANG=en_US.UTF-8
+# shellcheck disable=SC2155
 [[ -z "${USER:-}" ]] && export USER="$(id -un)"
 
 shopt -s histappend autocd checkhash cdspell extglob histverify
