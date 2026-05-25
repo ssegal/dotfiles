@@ -32,7 +32,6 @@ if command_exists eza; then
 fi
 
 command_exists thefuck && eval "$(thefuck --alias)"
-command_exists mcfly && eval "$(mcfly init bash)"
 
 # Clear any error state
 true

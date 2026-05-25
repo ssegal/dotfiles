@@ -66,6 +66,9 @@ dedup_path_var MANPATH
 # End MANPATH with a colon so the default manpath is appended.
 export MANPATH=$MANPATH:
 
+# shellcheck disable=SC1091
+[[ -r "${HOMEBREW_PREFIX}/share/bash-completion/bash_completion" ]] && \
+     . "${HOMEBREW_PREFIX}/share/bash-completion/bash_completion"
 command_exists dircolors && eval "$(dircolors -b)"
 
 # Clear any error state
