@@ -4,11 +4,7 @@ format = """
 ${custom.root}\
 $hostname\
 $directory\
-$vcs\
-$package\
-$line_break\
-$container\
-$character\
+$all\
 """
 
 [custom.root]
@@ -42,6 +38,7 @@ disabled = true
 
 [character]
 success_symbol = "❯"
+vimcmd_symbol = "❮"
 
 [cmake]
 format = '\[[$symbol($version)]($style)\]'
@@ -300,7 +297,6 @@ disabled = true
 
 [python]
 format = '\[[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style)\]'
-disabled = false
 
 [quarto]
 format = '\[[$symbol($version)]($style)\]'
@@ -372,6 +368,7 @@ disabled = true
 
 [username]
 format = '[$user]($style)@'
+disabled = true
 
 [vagrant]
 format = '\[[$symbol($version)]($style)\]'

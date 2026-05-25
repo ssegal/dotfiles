@@ -38,8 +38,7 @@
 ## command line texts.  Possible values include, for example, "vim", "emacs
 ## -nw" and "nano".
 
-bleopt editor=nano
-
+#bleopt editor=
 
 ## The following settings sets the behavior of visible bells (vbell).  The
 ## option "vbell_duration" sets the time duration to show the vbell.  The
@@ -286,6 +285,7 @@ bleopt editor=nano
 ## exit status will not be shown.  The value can contain ANSI escape sequences.
 
 #bleopt exec_errexit_mark=$'\e[91m[ble: exit %d]\e[m'
+bleopt exec_errexit_mark=
 
 
 ## "exec_elapsed_mark" specifies the format of the command execution time
@@ -348,7 +348,8 @@ bleopt editor=nano
 ## history is shared with the other Bash ble.sh sessions with the history
 ## sharing turned on.
 
-bleopt history_share=on
+#bleopt history_share=
+bleopt history_share=1
 
 
 ## This option controls the target range in the command history for
@@ -945,9 +946,9 @@ bleopt history_share=on
 ## variable type is enabled.  All of these settings have non-empty values by
 ## default.
 
-bleopt highlight_syntax=on
-bleopt highlight_filename=on
-bleopt highlight_variable=on
+#bleopt highlight_syntax=1
+#bleopt highlight_filename=1
+#bleopt highlight_variable=1
 
 
 ## The following settings control the timeout and user-input cancellation of
