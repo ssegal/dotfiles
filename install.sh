@@ -59,7 +59,7 @@ echo "*** Installing extra tools via Homebrew"
 brew install -q rg eza bat bat-extras mcfly fzf lazygit fd starship
 if [ "$(uname -s)" = "Darwin" ]; then
     echo "*** MacOS-specific install"
-    brew install -q coreutils grep bash bash-completion@2 findutils gnu-sed gnu-awk gnu-tar gawk git
+    brew install -q coreutils grep bash bash-completion@2 findutils gnu-sed gnu-tar gawk git
     REALPATH="grealpath"
     GREP="ggrep"
     LN="gln"
@@ -103,20 +103,20 @@ $BASH "$TMPDIR"/ble-nightly/ble.sh --install ~/.local/share
 
 echo "*** Wiring up bash config scripts"
 if [ -f "${HOME}/.bash_profile" ]; then
-    if ! ${GREP} -Fq ". \"~/${DOTFILES}/bash/bash_profile\" ~/.bash_profile"; then
-        echo ". \"~/${DOTFILES}/bash/bash_profile\"" >> ~/.bash_profile;
+    if ! ${GREP} -Fq ". \"\${HOME}/${DOTFILES}/bash/bash_profile\" ~/.bash_profile"; then
+        echo ". \"\${HOME}/${DOTFILES}/bash/bash_profile\"" >> ~/.bash_profile;
     fi
 else
-    echo ". \"~/${DOTFILES}"/bash/bash_profile\" > ~/.bash_profile
-    echo ". ~/.bashrc" >> ~/.bash_profile
+    echo ". \"\${HOME}/${DOTFILES}"/bash/bash_profile\" > ~/.bash_profile
+    echo "[[ -f \${HOME}/.bashrc ]] && . \"\${HOME}/.bashrc\"" >> ~/.bash_profile
 fi
 
 if [ -f "${HOME}/.bashrc" ]; then
-    if ! ${GREP} -Fq ". ~/\"${DOTFILES}/bash/bashrc\"" ~/.bashrc; then
-        echo ". ~/\"${DOTFILES}/bash/bashrc\"" >> ~/.bashrc;
+    if ! ${GREP} -Fq ". \"\${HOME}/${DOTFILES}/bash/bashrc\"" ~/.bashrc; then
+        echo ". \"\${HOME}/${DOTFILES}/bash/bashrc\"" >> ~/.bashrc;
     fi
 else
-    echo ". \"~/${DOTFILES}/bash/bashrc\"" > ~/.bashrc;
+    echo ". \"\${HOME}/${DOTFILES}/bash/bashrc\"" > ~/.bashrc;
 fi
 
 echo "*** DONE!"
