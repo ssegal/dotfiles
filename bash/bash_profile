@@ -18,15 +18,14 @@ if [[ $OSTYPE == darwin* ]]; then
     for mandir in "${HOMEBREW_PREFIX}/opt/"*"/libexec/gnuman"; do MANPATH="$mandir":$MANPATH; done
 fi
 
-[[ -d ${HOMEBREW_PREFIX}/opt/man-db/libexec/bin ]]; PATH="${HOMEBREW_PREFIX}/opt/man-db/libexec/bin":$PATH
-[[ -d ${HOMEBREW_PREFIX}/opt/man-db/libexec/man ]]; MANPATH="${HOMEBREW_PREFIX}/opt/man-db/libexec/man":$MANPATH
 [[ -d $HOMEBREW_PREFIX ]] && PATH="$HOMEBREW_PREFIX/bin":"$HOMEBREW_PREFIX/sbin":$PATH
+[[ -d $HOMEBREW_PREFIX ]] && MANPATH="$HOMEBREW_PREFIX/share/man":$MANPATH
 [[ -d $HOME/.local/bin ]] && PATH="$HOME/.local/bin":$PATH
 [[ -d $HOME/.local/share/man ]] && MANPATH="$HOME/.local/share/man":$MANPATH
 [[ -d $HOME/.cargo/bin ]] && PATH=$PATH:"$HOME/.cargo/bin"
+
 command_exists python3 && PATH=$PATH:"$(python3 -m site --user-base)/bin"
 command_exists go && PATH=$PATH:$(go env GOPATH)/bin
-
 
 export PATH
 export MANPATH
@@ -59,14 +58,13 @@ command_exists edit && export EDITOR="edit"
 
 export TZ=America/New_York
 
-if command_exists batpipe; then
-    LESSOPEN="|$(command -v batpipe) -p %s"; export LESSOPEN
-    export LESS="$LESS -R"
-    export BATPIPE="color"
-fi
+command_exists batpipe && eval "$(batpipe)"
 
 dedup_path_var PATH
 dedup_path_var MANPATH
+
+# End MANPATH with a colon so the default manpath is appended.
+export MANPATH=$MANPATH:
 
 command_exists dircolors && eval "$(dircolors -b)"
 
