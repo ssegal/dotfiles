@@ -1509,3 +1509,8 @@ blehook/eval-after-load keymap_vi blerc/vim-load-hook
 ## execution will be skipped.  The default value is 5.0 msec.
 
 #bleopt debug_profiler_tree_threshold=5.0
+
+if command -v fzf &> /dev/null; then
+  ble-import -d integration/fzf-completion
+  ble-import -d integration/fzf-key-bindings
+fi

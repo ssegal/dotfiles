@@ -2,7 +2,7 @@
 
 # in .bashrc, near the top
 case $- in
-  *i*) ;;
+    *i*) ;;
     *) return ;;
 esac
 
@@ -22,9 +22,15 @@ export LANG=en_US.UTF-8
 
 shopt -s histappend autocd checkhash cdspell extglob histverify
 command_exists starship && eval "$(starship init bash)"
+command_exists zoxide && eval "$(zoxide init bash)"
 
 # shellcheck disable=SC1090
-source_if_exists ~/.local/share/blesh/ble.sh --rcfile "${SCRIPT_DIR}/blerc"
+if [[ -r ~/.local/share/blesh/ble.sh ]]; then
+    . ~/.local/share/blesh/ble.sh --rcfile "${SCRIPT_DIR}/blerc"
+else
+    # ble.sh handles this if it exists
+    command_exists fzf && eval "$(fzf --bash)"
+fi
 
 # additional aliases
 if command_exists eza; then
