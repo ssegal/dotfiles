@@ -22,7 +22,6 @@ export LANG=en_US.UTF-8
 
 shopt -s histappend autocd checkhash cdspell extglob histverify
 command_exists starship && eval "$(starship init bash)"
-command_exists zoxide && eval "$(zoxide init bash)"
 
 # shellcheck disable=SC1090
 if [[ -r ~/.local/share/blesh/ble.sh ]]; then
@@ -30,6 +29,7 @@ if [[ -r ~/.local/share/blesh/ble.sh ]]; then
 else
     # ble.sh handles this if it exists
     command_exists fzf && eval "$(fzf --bash)"
+    command_exists zoxide && eval "$(zoxide init bash)"
 fi
 
 # additional aliases
