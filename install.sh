@@ -25,28 +25,29 @@ get_latest_release_tag() {
         tr -d '", :'
 }
 
+TEMPDIR=$(mktemp -d)
+
 cleanup() {
     [ -n "${TEMPDIR}" ] && rm -rf "${TEMPDIR}"
 }
 trap cleanup EXIT
 
 # Check for supported systems
-case "$(uname -sm) in
-    Linux x86_64|Linux aarch64)
+case "$(uname -sm)" in
+    "Linux x86_64"|"Linux aarch64")
         export BREW="/home/linuxbrew/.linuxbrew/bin/brew"
         ;;
-    Darwin x86_64)
+    "Darwin x86_64")
         export BREW="/usr/local/bin/brew"
         ;;
-    Darwin aarch64)
+    "Darwin aarch64")
         export BREW="/opt/homebrew/bin/brew"
         ;;
     *)
-        abort "!!! Unsupported OS/Arch combo detected"
+        abort "$0: Unsupported OS/Arch combo detected"
         ;;
 esac
 
-TEMPDIR=$(mktemp -d)
 
 command_exists curl || abort "$0: curl missing"
 command_exists xz || abort "$0: xz missing"
