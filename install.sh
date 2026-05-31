@@ -190,7 +190,7 @@ $LN -rfs "$DOTFILES/emacs.d" "$HOME/.emacs.d"
 $LN -rfs "$DOTFILES/tmux.conf" "$HOME/.tmux.conf"
 mkdir -p "$HOME/.config"
 $LN -rfs "$DOTFILES/config/starship.toml" "$HOME/.config/starship.toml"
-$LN -rfs "$DOTFILES/config/bat" "$HOME/.config/bat"
+$LN -rfs --target-directory="$HOME/.config" "$DOTFILES/config/bat"
 
 $LN -rfs "$DOTFILES/bin/edit" "$HOME_BIN_DIR/edit"
 
@@ -212,7 +212,7 @@ $BASH "$TEMPDIR"/ble-nightly/ble.sh --install ~/.local/share
 echo "*** Wiring up bash config scripts"
 DOTFILES_REL=$(${REALPATH} --relative-to="$HOME" "$DOTFILES")
 if [ -f "${HOME}/.bash_profile" ]; then
-    if ! ${GREP} -Fq ". \"\${HOME}/${DOTFILES_REL}/bash/bash_profile\" ~/.bash_profile"; then
+    if ! ${GREP} -Fq ". \"\${HOME}/${DOTFILES_REL}/bash/bash_profile\"" ~/.bash_profile; then
         echo ". \"\${HOME}/${DOTFILES_REL}/bash/bash_profile\"" >> ~/.bash_profile;
     fi
 else

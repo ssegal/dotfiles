@@ -1,3 +1,4 @@
+# -*- mode: sh; sh-shell: bash -*-
 # shellcheck shell=bash
 
 # in .bashrc, near the top
@@ -40,6 +41,22 @@ if command_exists eza; then
 fi
 
 command_exists thefuck && eval "$(thefuck --alias)"
+command_exists emacsclient && alias te="emacsclient -t"
+
+# Set up agent forwarding in WSL
+if command_exists wslinfo &&
+   command_exists npiperelay.exe &&
+   command_exists socat &&
+   [[ -z $SSH_AUTH_SOCK ]]; then
+    # Set up agent forwarding
+    if [ -z "$SSH_AUTH_SOCK" ]; then
+        export SSH_AUTH_SOCK=$HOME/.ssh/agent/windows.sock
+        if [ ! -S $SSH_AUTH_SOCK ]; then
+            mkdir -pm 700 ~/.ssh/agent
+            socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork EXEC:"npiperelay.exe -ei -s //./pipe/openssh-ssh-agent",nofork &
+        fi
+    fi
+fi
 
 # Clear any error state
 true
