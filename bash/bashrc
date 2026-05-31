@@ -1,0 +1,62 @@
+# -*- mode: sh; sh-shell: bash -*-
+# shellcheck shell=bash
+
+# in .bashrc, near the top
+case $- in
+    *i*) ;;
+    *) return ;;
+esac
+
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+
+# shellcheck disable=SC1091
+source "${SCRIPT_DIR}/lib/utils.bash"
+
+export HISTSIZE=50000
+export HISTFILESIZE=10000
+export HISTCONTROL="ignoreboth"
+export HISTTIMEFORMAT="%F %r %Z  "
+export PS1='\[\e[01;32m\]\h\[\e[0m\]:\[\e[01;34m\]\w\[\e[0m\]\n\$ '
+export LANG=en_US.UTF-8
+# shellcheck disable=SC2155
+[[ -z "${USER:-}" ]] && export USER="$(id -un)"
+
+shopt -s histappend autocd checkhash cdspell extglob histverify
+command_exists starship && eval "$(starship init bash)"
+
+# shellcheck disable=SC1090
+if [[ -r ~/.local/share/blesh/ble.sh ]]; then
+    . ~/.local/share/blesh/ble.sh --rcfile "${SCRIPT_DIR}/blerc"
+else
+    # ble.sh handles this if it exists
+    command_exists fzf && eval "$(fzf --bash)"
+    command_exists zoxide && eval "$(zoxide init bash)"
+fi
+
+# additional aliases
+if command_exists eza; then
+    alias ls="eza"
+    alias ll="eza -l --icons --git"
+    alias lt="eza --tree"
+fi
+
+command_exists thefuck && eval "$(thefuck --alias)"
+command_exists emacsclient && alias te="emacsclient -t"
+
+# Set up agent forwarding in WSL
+if command_exists wslinfo &&
+   command_exists npiperelay.exe &&
+   command_exists socat &&
+   [[ -z $SSH_AUTH_SOCK ]]; then
+    # Set up agent forwarding
+    if [ -z "$SSH_AUTH_SOCK" ]; then
+        export SSH_AUTH_SOCK=$HOME/.ssh/agent/windows.sock
+        if [ ! -S $SSH_AUTH_SOCK ]; then
+            mkdir -pm 700 ~/.ssh/agent
+            socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork EXEC:"npiperelay.exe -ei -s //./pipe/openssh-ssh-agent",nofork &
+        fi
+    fi
+fi
+
+# Clear any error state
+true
