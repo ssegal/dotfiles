@@ -1,3 +1,4 @@
+# -*- mode: sh; sh-shell: bash -*-
 # shellcheck shell=bash
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
@@ -20,7 +21,7 @@ dedup_path_var() {
     local var_name="$1"
     # Get the current value of the variable dynamically
     local current_val="${!var_name}"
-    
+
     # Do nothing if the variable is empty
     [[ -z "$current_val" ]] && return
 

@@ -1,6 +1,7 @@
 #!/bin/bash
 #
-# Assume that Linux systems have GNU coreutils or compatible.
+# Assume that Linux systems have GNU coreutils or compatible
+# (busybox is not supported)
 
 set -eu
 
@@ -29,30 +30,40 @@ cleanup() {
 }
 trap cleanup EXIT
 
+# Check for supported systems
+case "$(uname -sm) in
+    Linux x86_64|Linux aarch64)
+        export BREW="/home/linuxbrew/.linuxbrew/bin/brew"
+        ;;
+    Darwin x86_64)
+        export BREW="/usr/local/bin/brew"
+        ;;
+    Darwin aarch64)
+        export BREW="/opt/homebrew/bin/brew"
+        ;;
+    *)
+        abort "!!! Unsupported OS/Arch combo detected"
+        ;;
+esac
+
 TEMPDIR=$(mktemp -d)
 
 command_exists curl || abort "$0: curl missing"
 command_exists xz || abort "$0: xz missing"
 
-if command_exists brew; then
+if [[ -x $BREW ]]; then
     echo "*** Existing homebrew found!"
-    eval "$(brew shellenv)"
-elif [ "${2:-}" = "--brew" ]; then
+    eval "$($BREW shellenv)"
+elif [[ ${2:-} == "--brew" ]]; then
     # install homebrew
     echo "*** Installing homebrew"
     export NONINTERACTIVE=1
     ${BASH} -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    if [ -x "/usr/local/bin/brew" ]; then
-        eval "$(/usr/local/bin/brew shellenv)"
-    elif [ -x "/opt/homebrew/bin/brew" ]; then
-        eval "$(/opt/homebrew/bin/brew shellenv)"
-    elif [ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-    fi
-elif [ "$(uname -s)" = "Darwin" ]; then
-    abort "$0: MacOS requires homebrew.  Use \"--brew\"."
+    eval "$($BREW shellenv)"
+elif [[ $(uname -s) == "Darwin" ]]; then
+    abort "!!! $MacOS requires homebrew.  Use \"--brew\"."
 else
-    echo "*** No homebrew installation"
+    echo "*** No homebrew installation found."
 fi
 
 echo "*** Removing old links"
@@ -71,14 +82,14 @@ mkdir -p "$HOME_MAN_DIR"
 REALPATH="realpath"
 GREP="grep"
 LN="ln"
-[ -z "${LANG:-}" ] && export LANG=en_US.UTF-8
+[[ -z "${LANG:-}" ]] && export LANG=en_US.UTF-8
 # shellcheck disable=SC2155
-[ -z "${USER:-}" ] && export USER="$(id -un)"
+[[ -z "${USER:-}" ]] && export USER="$(id -un)"
 
-if [ -n "${HOMEBREW_PREFIX:-}" ]; then
+if [[ -n "${HOMEBREW_PREFIX:-}" ]]; then
     echo "*** Installing extra tools via Homebrew"
     brew install -q rg eza bat bat-extras fzf lazygit fd starship
-    if [ "$(uname -s)" = "Darwin" ]; then
+    if [[ "$(uname -s)" == "Darwin" ]]; then
         echo "*** MacOS-specific install"
         brew install -q coreutils grep bash bash-completion@2 findutils gnu-sed gnu-tar gawk git
         REALPATH="grealpath"
@@ -118,7 +129,7 @@ else
         echo "*** Installing starship"
         curl -sS https://starship.rs/install.sh | sh -s -- -f -b "${HOME_BIN_DIR}"
     fi
-    if ! command_exists rg && [ -n "${ripgrep_triple:-}" ]; then
+    if ! command_exists rg && [[ -n "${ripgrep_triple:-}" ]]; then
         echo "*** Downloading rg"
         ripgrep_tag=$(get_latest_release_tag BurntSushi/ripgrep)
         curl -sLS "https://github.com/BurntSushi/ripgrep/releases/download/${ripgrep_tag}/ripgrep-${ripgrep_tag}-${ripgrep_triple}.tar.gz" | \
@@ -130,7 +141,7 @@ else
         mkdir -p "$HOME/.local/share/bash-completions/completions"
         cp -f "$TEMPDIR/ripgrep-${ripgrep_tag}-${ripgrep_triple}/complete/rg.bash" "$HOME/.local/share/bash-completions/completions/rg"
     fi
-    if ! command_exists eza && [ -n "${eza_triple:-}" ]; then
+    if ! command_exists eza && [[ -n "${eza_triple:-}" ]]; then
         echo "*** Downloading eza"
         eza_tag=$(get_latest_release_tag eza-community/eza)
         eza_version=${eza_tag#?}
@@ -148,7 +159,7 @@ else
         cp -f "$TEMPDIR/target/man-${eza_version}/eza_colors.5" "$HOME_MAN_DIR/man5"
         cp -f "$TEMPDIR/target/man-${eza_version}/eza_colors-explanation.5" "$HOME_MAN_DIR/man5"
     fi
-    if ! command_exists bat && [ -n "${bat_triple:-}" ]; then
+    if ! command_exists bat && [[ -n "${bat_triple:-}" ]]; then
         echo "*** Downloading bat"
         bat_tag=$(get_latest_release_tag sharkdp/bat)
         curl -sLS "https://github.com/sharkdp/bat/releases/download/${bat_tag}/bat-${bat_tag}-${bat_triple}.tar.gz" | \
@@ -160,7 +171,7 @@ else
         mkdir -p "$HOME/.local/share/bash-completions/completions"
         cp -f "$TEMPDIR/bat-${bat_tag}-${bat_triple}/autocomplete/bat.bash" "$HOME/.local/share/bash-completions/completions/bat"
     fi
-    if ! command_exists fd && [ -n "${fd_triple:-}" ]; then
+    if ! command_exists fd && [[ -n "${fd_triple:-}" ]]; then
         echo "*** Downloading fd"
         fd_tag=$(get_latest_release_tag sharkdp/fd)
         curl -sLS "https://github.com/sharkdp/fd/releases/download/${fd_tag}/fd-${fd_tag}-${fd_triple}.tar.gz" | \
@@ -172,7 +183,7 @@ else
         mkdir -p "$HOME/.local/share/bash-completions/completions"
         cp -f "$TEMPDIR/fd-${fd_tag}-${fd_triple}/autocomplete/fd.bash" "$HOME/.local/share/bash-completions/completions/fd"
     fi
-    if ! command_exists fzf && [ -n "${fzf_triple:-}" ]; then
+    if ! command_exists fzf && [[ -n "${fzf_triple:-}" ]]; then
         echo "*** Downloading fzf"
         fzf_tag=$(get_latest_release_tag junegunn/fzf)
         fzf_version=${fzf_tag#?}
@@ -198,7 +209,7 @@ echo "*** Installing SSH keys"
 # Install SSH keys
 if command_exists ssh-import-id; then
     ssh-import-id gh:ssegal
-elif [ ! -e "$HOME/.ssh/authorized_keys" ]; then
+elif [[ ! -e "$HOME/.ssh/authorized_keys" ]]; then
     mkdir -p "$HOME/.ssh"
     chmod 700 "$HOME/.ssh"
     curl -sLS "https://github.com/ssegal.keys" > "$HOME/.ssh/authorized_keys"
@@ -211,16 +222,16 @@ $BASH "$TEMPDIR"/ble-nightly/ble.sh --install ~/.local/share
 
 echo "*** Wiring up bash config scripts"
 DOTFILES_REL=$(${REALPATH} --relative-to="$HOME" "$DOTFILES")
-if [ -f "${HOME}/.bash_profile" ]; then
+if [[ -f "${HOME}/.bash_profile" ]]; then
     if ! ${GREP} -Fq ". \"\${HOME}/${DOTFILES_REL}/bash/bash_profile\"" ~/.bash_profile; then
         echo ". \"\${HOME}/${DOTFILES_REL}/bash/bash_profile\"" >> ~/.bash_profile;
     fi
 else
-    echo ". \"\${HOME}/${DOTFILES_REL}"/bash/bash_profile\" > ~/.bash_profile
+    echo ". \"\${HOME}/${DOTFILES_REL}/bash/bash_profile\"" > ~/.bash_profile
     echo "[[ -f \${HOME}/.bashrc ]] && . \"\${HOME}/.bashrc\"" >> ~/.bash_profile
 fi
 
-if [ -f "${HOME}/.bashrc" ]; then
+if [[ -f "${HOME}/.bashrc" ]]; then
     if ! ${GREP} -Fq ". \"\${HOME}/${DOTFILES_REL}/bash/bashrc\"" ~/.bashrc; then
         echo ". \"\${HOME}/${DOTFILES_REL}/bash/bashrc\"" >> ~/.bashrc;
     fi
