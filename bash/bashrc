@@ -49,12 +49,10 @@ if command_exists wslinfo &&
    command_exists socat &&
    [[ -z $SSH_AUTH_SOCK ]]; then
     # Set up agent forwarding
-    if [ -z "$SSH_AUTH_SOCK" ]; then
-        export SSH_AUTH_SOCK=$HOME/.ssh/agent/windows.sock
-        if [ ! -S $SSH_AUTH_SOCK ]; then
-            mkdir -pm 700 ~/.ssh/agent
-            socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork EXEC:"npiperelay.exe -ei -s //./pipe/openssh-ssh-agent",nofork &
-        fi
+    export SSH_AUTH_SOCK=$HOME/.ssh/agent/windows.sock
+    if [ ! -S $SSH_AUTH_SOCK ]; then
+        mkdir -pm 700 ~/.ssh/agent
+        socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork EXEC:"npiperelay.exe -ei -s //./pipe/openssh-ssh-agent",nofork &
     fi
 fi
 
