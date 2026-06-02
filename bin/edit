@@ -2,14 +2,15 @@
 
 shopt -s execfail
 
-# Try to use Visual Studio Code if we are running in the VSCode integrated
-# terminal, or if we're in a normal terminal at a local console.
-if [[ $TERM_PROGRAM == "vscode" ]] || [[ -z "$SSH_TTY" ]]; then
-    exec code --wait $@
-fi
+# If we're in the VS Code integrated terminal, then send
+# the edit to a VS Code frame.
+[[ $TERM_PROGRAM == "vscode" ]] && exec code --wait $@
+
+# Otherwise, try a bunch of edit apps in sequence.
 exec emacsclient -t $@
+exec micro $@
 exec nano $@
 exec vi $@
-echo "No editor tool found."
 
-
+echo "$0: no editor tool found" >&2
+exit 1

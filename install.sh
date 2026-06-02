@@ -73,7 +73,8 @@ rm -rf \
     "$HOME/.zshrc" \
     "$HOME/.emacs.d" \
     "$HOME/.tmux.conf" \
-    "$HOME/.zimrc"
+    "$HOME/.zimrc" \
+    "$HOME/.config/nano"
 
 HOME_BIN_DIR="$HOME/.local/bin"
 mkdir -p "$HOME_BIN_DIR"
@@ -89,10 +90,10 @@ LN="ln"
 
 if [[ -n "${HOMEBREW_PREFIX:-}" ]]; then
     echo "*** Installing extra tools via Homebrew"
-    brew install -q rg eza bat bat-extras fzf lazygit fd starship
+    brew install -q rg eza bat bat-extras fzf lazygit fd starship micro
     if [[ "$(uname -s)" == "Darwin" ]]; then
         echo "*** MacOS-specific install"
-        brew install -q coreutils grep bash bash-completion@2 findutils gnu-sed gnu-tar gawk git
+        brew install -q coreutils grep bash bash-completion@2 findutils gnu-sed gnu-tar gawk git nano
         REALPATH="grealpath"
         GREP="ggrep"
         LN="gln"
@@ -113,6 +114,7 @@ else
             bat_triple=aarch64-unknown-linux-musl
             fd_triple=aarch64-unknown-linux-musl
             fzf_triple=linux_arm64
+            micro_triple=linux-arm64
             ;;
         "Linux x86_64")
             ripgrep_triple=x86_64-unknown-linux-musl
@@ -120,6 +122,7 @@ else
             bat_triple=x86_64-unknown-linux-musl
             fd_triple=x86_64-unknown-linux-musl
             fzf_triple=linux_amd64
+            micro_triple=linux64
             ;;
         *)
             abort "$0: Unsupported machine type"
@@ -188,10 +191,20 @@ else
         echo "*** Downloading fzf"
         fzf_tag=$(get_latest_release_tag junegunn/fzf)
         fzf_version=${fzf_tag#?}
-        echo "downloading https://github.com/junegunn/fzf/releases/download/${fzf_tag}/fzf-${fzf_version}-${fzf_triple}.tar.gz"
         curl -sLS "https://github.com/junegunn/fzf/releases/download/${fzf_tag}/fzf-${fzf_version}-${fzf_triple}.tar.gz" | \
             tar xz -C "$HOME_BIN_DIR" fzf
         chmod +x "$HOME_BIN_DIR/fzf"
+    fi
+    if ! command_exists micro && [[ -n "${micro_triple:-}" ]]; then
+        echo "*** Downloading micro"
+        micro_tag=$(get_latest_release_tag micro-editor/micro)
+        micro_version=${micro_tag#?}
+        curl -sLS "https://github.com/micro-editor/micro/releases/download/${micro_tag}/micro-${micro_version}-${micro_triple}.tar.gz" | \
+            tar xz -C "$TEMPDIR"
+        cp -f "$TEMPDIR/micro-${micro_version}/micro" "$HOME_BIN_DIR"
+        chmod +x "${HOME_BIN_DIR}/micro"
+        mkdir -p "${HOME_MAN_DIR}/man1"
+        cp -f "$TEMPDIR/micro-${micro_version}/micro.1" "${HOME_MAN_DIR}/man1"
     fi
 fi
 
