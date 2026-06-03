@@ -297,6 +297,7 @@ disabled = true
 
 [python]
 format = '\[[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style)\]'
+disabled = true
 
 [quarto]
 format = '\[[$symbol($version)]($style)\]'
