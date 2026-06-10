@@ -6,6 +6,9 @@ shopt -s execfail
 # the edit to a VS Code frame.
 [[ $TERM_PROGRAM == "vscode" ]] && exec code --wait $@
 
+# If we're in an Emacs terminal, then try to open on the existing frame.
+[[ -n $INSIDE_EMACS ]] && exec emacsclient -r $@
+
 # Otherwise, try a bunch of edit apps in sequence.
 exec emacsclient -t $@
 exec micro $@

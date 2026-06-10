@@ -41,7 +41,10 @@ if command_exists eza; then
 fi
 
 command_exists thefuck && eval "$(thefuck --alias)"
-command_exists emacsclient && alias te="emacsclient -t"
+if command_exists emacsclient; then
+    alias te="emacsclient -t"
+    alias ec="emacsclient"
+fi
 
 # Set up agent forwarding in WSL
 if command_exists wslinfo &&
