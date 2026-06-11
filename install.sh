@@ -37,9 +37,6 @@ case "$(uname -sm)" in
     "Linux x86_64"|"Linux aarch64")
         export BREW="/home/linuxbrew/.linuxbrew/bin/brew"
         ;;
-    "Darwin x86_64")
-        export BREW="/usr/local/bin/brew"
-        ;;
     "Darwin aarch64")
         export BREW="/opt/homebrew/bin/brew"
         ;;
@@ -90,10 +87,10 @@ LN="ln"
 
 if [[ -n "${HOMEBREW_PREFIX:-}" ]]; then
     echo "*** Installing extra tools via Homebrew"
-    brew install -q rg eza bat bat-extras fzf lazygit fd starship micro
+    brew install -yq rg eza bat bat-extras fzf lazygit fd starship micro
     if [[ "$(uname -s)" == "Darwin" ]]; then
         echo "*** MacOS-specific install"
-        brew install -q coreutils grep bash bash-completion@2 findutils gnu-sed gnu-tar gawk git nano
+        brew install -yq coreutils grep bash bash-completion@2 findutils gnu-sed gnu-tar gawk git nano
         REALPATH="grealpath"
         GREP="ggrep"
         LN="gln"
