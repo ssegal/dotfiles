@@ -14,10 +14,8 @@ fi
 
 if [[ -n ${HOMEBREW_PREFIX:-} ]] && [[ $OSTYPE == darwin* ]]; then
     for bindir in "${HOMEBREW_PREFIX}/opt/"*"/libexec/gnubin"; do export PATH="$bindir":$PATH; done
-    for mandir in "${HOMEBREW_PREFIX}/opt/"*"/libexec/gnuman"; do export MANPATH="$mandir":$MANPATH; done
 fi
 
-[[ -d $HOME/.local/share/man ]] && export MANPATH="$HOME/.local/share/man":$MANPATH
 # shellcheck disable=SC1091
 source_if_exists "$HOME/.cargo/env"
 
@@ -42,11 +40,6 @@ export TZ=America/New_York
 command_exists batpipe && eval "$(batpipe)"
 
 dedup_path_var PATH
-if [[ -n $MANPATH ]]; then
-    dedup_path_var MANPATH
-    # End MANPATH with a colon so the default manpath is appended.
-    export MANPATH=$MANPATH:
-fi
 dedup_path_var PKG_CONFIG_PATH
 
 source_if_exists "${HOMEBREW_PREFIX}/share/bash-completion/bash_completion"
