@@ -25,4 +25,4 @@
 #--map-syntax ".ignore:Git Ignore"
 
 --style=plain
---theme="Visual Studio Dark+"
+--theme=DarkPlus

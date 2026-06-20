@@ -87,7 +87,7 @@ LN="ln"
 
 if [[ -n "${HOMEBREW_PREFIX:-}" ]]; then
     echo "*** Installing extra tools via Homebrew"
-    brew install -yq rg eza bat bat-extras fzf lazygit fd starship micro
+    brew install -yq rg eza bat lesspipe fzf lazygit fd starship micro
     if [[ "$(uname -s)" == "Darwin" ]]; then
         echo "*** MacOS-specific install"
         brew install -yq coreutils grep bash bash-completion@2 findutils gnu-sed gnu-tar gawk git nano
@@ -172,6 +172,12 @@ else
         mkdir -p "$HOME/.local/share/bash-completions/completions"
         cp -f "$TEMPDIR/bat-${bat_tag}-${bat_triple}/autocomplete/bat.bash" "$HOME/.local/share/bash-completions/completions/bat"
     fi
+    if ! command_exists lesspipe.sh; then
+        echo "*** Downloading lesspipe"
+        curl -sLS "https://lesspipe.org/files/lesspipe.sh" -o "${HOME_BIN_DIR}/lesspipe.sh"
+        curl -sLS "https://lesspipe.org/files/archive_color" -o "${HOME_BIN_DIR}/archive_color"
+        chmod 0755 "${HOME_BIN_DIR}/lesspipe.sh" "${HOME_BIN_DIR}/archive_color"
+    fi
     if ! command_exists fd && [[ -n "${fd_triple:-}" ]]; then
         echo "*** Downloading fd"
         fd_tag=$(get_latest_release_tag sharkdp/fd)
@@ -247,6 +253,9 @@ if [[ -f "${HOME}/.bashrc" ]]; then
 else
     echo ". \"\${HOME}/${DOTFILES_REL}/bash/bashrc\"" > ~/.bashrc;
 fi
+
+echo "*** Compiling bat cache"
+"${HOME_BIN_DIR}/bat" cache --build
 
 echo "*** DONE!"
 

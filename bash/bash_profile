@@ -36,8 +36,17 @@ command_exists emacsclient && export EDITOR='emacsclient -t'
 command_exists edit && export EDITOR="edit"
 
 export TZ=America/New_York
-
-command_exists batpipe && eval "$(batpipe)"
+command_exists lesspipe.sh && eval "$(lesspipe.sh)"
+export LESS=' -R '
+if command_exists bat; then
+    export LESSCOLORIZER="bat -p --theme=DarkPlus"
+    export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+    export MANROFFOPT="-c"
+elif command_exists batcat; then
+    export LESSCOLORIZER="batcat -p --theme=DarkPlus"
+    export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
+    export MANROFFOPT="-c"
+fi
 
 dedup_path_var PATH
 dedup_path_var PKG_CONFIG_PATH
