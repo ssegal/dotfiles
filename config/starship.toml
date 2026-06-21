@@ -6,6 +6,7 @@ $hostname\
 $directory\
 $all\
 """
+command_timeout = 1000
 
 [custom.root]
 when = ''' test "$USER" = "root" '''
@@ -142,6 +143,7 @@ format = '\[[$state ($progress_current/$progress_total)]($style)\]'
 
 [git_status]
 format = '([\[$all_status$ahead_behind\]]($style))'
+use_git_executable = true
 
 [gleam]
 format = '\[[$symbol($version)]($style)\]'
