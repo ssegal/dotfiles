@@ -87,10 +87,10 @@ LN="ln"
 
 if [[ -n "${HOMEBREW_PREFIX:-}" ]]; then
     echo "*** Installing extra tools via Homebrew"
-    brew install -yq rg eza bat lesspipe fzf lazygit fd starship micro
+    brew install -yq rg eza bat lesspipe fzf lazygit fd starship micro flyline bash bash-completion@2
     if [[ "$(uname -s)" == "Darwin" ]]; then
         echo "*** MacOS-specific install"
-        brew install -yq coreutils grep bash bash-completion@2 findutils gnu-sed gnu-tar gawk git nano
+        brew install -yq coreutils grep findutils gnu-sed gnu-tar gawk git nano
         REALPATH="grealpath"
         GREP="ggrep"
         LN="gln"
