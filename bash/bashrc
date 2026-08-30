@@ -26,7 +26,7 @@ command_exists starship && eval "$(starship init bash)"
 
 if enable flyline; then
     flyline suggestions --auto-suggest false
-    flyline --send-shell-integration-codes full --enable-extended-key-codes true
+    flyline --send-shell-integration-codes full --enable-extended-key-codes true --show-animations false
     flyline set-cursor --backend terminal
 fi
 
