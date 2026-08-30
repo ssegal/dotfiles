@@ -1052,6 +1052,43 @@ bleopt history_share=1
 
 #ble-face -s cmdinfo_cd_cdpath         fg=26,bg=155
 
+
+# --- ZSH SYNTAX HIGHLIGHTING EMULATION ---
+
+# Valid Commands (Zsh default: green)
+# ble.sh separates commands by type, but all fall back to green for Zsh style
+ble-face -s command_builtin       'fg=green'
+ble-face -s command_alias         'fg=green'
+ble-face -s command_function      'fg=green'
+ble-face -s command_file          'fg=green'
+ble-face -s command_keyword       'fg=green'
+ble-face -s command_directory     'fg=green'
+
+# Base Syntax Fallbacks
+ble-face -s syntax_command        'fg=green'
+ble-face -s syntax_default        'none'
+
+# Errors (Zsh default: solid red text, no background block)
+ble-face -s syntax_error          'fg=red'
+ble-face -s argument_error        'fg=red'
+
+# Arguments and Options (Zsh default: cyan)
+ble-face -s argument_option       'fg=cyan'
+
+# Strings and Quotes (Zsh default: yellow or cyan)
+ble-face -s syntax_quoted         'fg=yellow'
+ble-face -s syntax_quotation      'fg=yellow,bold'
+ble-face -s syntax_escape         'fg=magenta'
+
+# Variables (Zsh default: magenta or none)
+ble-face -s syntax_varname        'fg=magenta'
+ble-face -s syntax_expr           'fg=cyan'
+
+# History Autocomplete Suggestions (Zsh-autosuggestions style)
+ble-face -s auto_complete         'fg=8' # Dark gray
+
+
+
 ##-----------------------------------------------------------------------------
 ## Keybindings
 
