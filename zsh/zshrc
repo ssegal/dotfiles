@@ -9,7 +9,7 @@ SCRIPT_DIR=${${(%):-%x}:a:h}
 source ${SCRIPT_DIR}/antidote/antidote.zsh
 antidote load
 
-(( $+commands[starship] )) && eval "$(starship init zsh)"
+(( $+commands[starship] )) && source <(starship init zsh)
 
 if [[ -n ${HOMEBREW_PREFIX:-} ]] && [[ $OSTYPE == darwin* ]]; then
     for bindir in "${HOMEBREW_PREFIX}/opt/"*"/libexec/gnubin"; do path=($bindir $path); done
@@ -23,13 +23,13 @@ fi
 export ALTERNATE_EDITOR=
 (( $+commands[emacsclient] )) && export EDITOR='emacsclient -t'
 (( $+commands[edit] )) && export EDITOR="edit"
-(( $+commands[zoxide] )) && eval "$(zoxide init zsh)"
-(( $+commands[fzf] )) && eval "$(fzf --zsh)"
+(( $+commands[zoxide] )) && source <(zoxide init zsh)
+(( $+commands[fzf] )) && source <(fzf --zsh)
 (( $+commands[python3] )) && path+="$(python3 -m site --user-base)/bin"
 (( $+commands[go] )) && path+="$(go env GOPATH)/bin"
-(( $+commands[dircolors] )) && eval "$(dircolors -b)"
+(( $+commands[dircolors] )) && source <(dircolors -b)
 
-(( $+commands[lesspipe.sh] )) && eval "$(lesspipe.sh)"
+(( $+commands[lesspipe.sh] )) && source <(lesspipe.sh)
 export LESS=' -R '
 export VISUAL="$EDITOR"
 
@@ -49,9 +49,7 @@ elif (( $+commands[batcat] )); then
     export MANROFFOPT="-c"
 fi
 
-if (( $+commands[thefuck] )); then
-    eval "$(thefuck --alias)"
-fi
+(( $+commands[thefuck] )) && source <(thefuck --alias)
 
 if (( $+commands[emacsclient] )); then
     alias te="emacsclient -t"
@@ -62,9 +60,9 @@ export EMAIL="ssegal127@gmail.com"
 export TZ="America/New_York"
 
 # Set up agent forwarding in WSL
-if (( $+commands[wslinfo] )) &&
-   (( $+commands[npiperelay.exe] )) &&
-   (( $+commands[socat] )) &&
+if (( $+commands[wslinfo] &&
+      $+commands[npiperelay.exe] &&
+      $+commands[socat] )) &&
    [[ -z $SSH_AUTH_SOCK ]]; then
     # Set up agent forwarding
     export SSH_AUTH_SOCK=$HOME/.ssh/agent/windows.sock
