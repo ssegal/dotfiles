@@ -1,5 +1,4 @@
 #!/bin/false
 # -*- mode: sh; sh-shell: zsh -*-
-# shellcheck shell=zsh
 
 zstyle ":z1:editor:emacs" cursor "block"

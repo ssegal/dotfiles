@@ -1,6 +1,5 @@
 #!/bin/false
 # -*- mode: sh; sh-shell: zsh; -*-
-# shellcheck shell=zsh
 
 typeset -U path PATH
 typeset -U pkg_config_path PKG_CONFIG_PATH
