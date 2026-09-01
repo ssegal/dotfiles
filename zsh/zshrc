@@ -18,6 +18,8 @@ fi
 [[ -n ${HOMEBREW_PREFIX:-} ]] && export PKG_CONFIG_PATH="${HOMEBREW_PREFIX}/lib/pkgconfig"${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}
 [[ -d ${HOME}/.local/lib/pkgconfig ]] && export PKG_CONFIG_PATH=" ${HOME}/.local/lib/pkgconfig"${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}
 
+[[ -r ${HOME}/.cargo/env ]] && source ${HOME}/.cargo/env
+
 export ALTERNATE_EDITOR=
 (( $+commands[emacsclient] )) && export EDITOR='emacsclient -t'
 (( $+commands[edit] )) && export EDITOR="edit"
@@ -58,6 +60,19 @@ fi
 
 export EMAIL="ssegal127@gmail.com"
 export TZ="America/New_York"
+
+# Set up agent forwarding in WSL
+if (( $+commands[wslinfo] )) &&
+   (( $+commands[npiperelay.exe] )) &&
+   (( $+commands[socat] )) &&
+   [[ -z $SSH_AUTH_SOCK ]]; then
+    # Set up agent forwarding
+    export SSH_AUTH_SOCK=$HOME/.ssh/agent/windows.sock
+    if [ ! -S $SSH_AUTH_SOCK ]; then
+        mkdir -pm 700 ~/.ssh/agent
+        socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork EXEC:"npiperelay.exe -ei -s //./pipe/openssh-ssh-agent",nofork &
+    fi
+fi
 
 # Clear any error state
 true
