@@ -1,3 +1,6 @@
 [submodule "emacs.d"]
 	path = emacs.d
 	url = https://github.com/ssegal/dot-emacs.git
+[submodule "zsh/antidote"]
+	path = zsh/antidote
+	url = https://github.com/mattmc3/antidote.git

@@ -52,7 +52,7 @@ command_exists xz || abort "$0: xz missing"
 if [[ -x $BREW ]]; then
     echo "*** Existing homebrew found!"
     eval "$($BREW shellenv)"
-elif [[ ${2:-} == "--brew" ]]; then
+elif [[ ${1:-} == "--brew" ]]; then
     # install homebrew
     echo "*** Installing homebrew"
     export NONINTERACTIVE=1
@@ -87,18 +87,14 @@ LN="ln"
 
 if [[ -n "${HOMEBREW_PREFIX:-}" ]]; then
     echo "*** Installing extra tools via Homebrew"
-    brew install -yq rg eza bat lesspipe fzf lazygit fd starship micro
+    brew install -yq rg eza bat lesspipe fzf lazygit fd starship micro zsh-patina
     if [[ "$(uname -s)" == "Darwin" ]]; then
         echo "*** MacOS-specific install"
-        brew install -yq coreutils grep bash bash-completion@2 findutils gnu-sed gnu-tar gawk git nano
+        brew install -yq coreutils grep findutils gnu-sed gnu-tar gawk git nano
         REALPATH="grealpath"
         GREP="ggrep"
         LN="gln"
-        LOGIN_BASH="$HOMEBREW_PREFIX/bin/bash"
-        if ! ${GREP} -Fq "${LOGIN_BASH}" "/etc/shells"; then
-            echo "${LOGIN_BASH}" | sudo tee -a /etc/shells > /dev/null
-        fi
-        sudo chsh "$(whoami)" -s "$BASH"
+        sudo chsh "$(whoami)" -s /bin/zsh
     fi
 else
     echo "*** Installing extra tools"
@@ -139,8 +135,6 @@ else
         chmod +x "$HOME_BIN_DIR/rg"
         mkdir -p "${HOME_MAN_DIR}/man1"
         cp -f "$TEMPDIR/ripgrep-${ripgrep_tag}-${ripgrep_triple}/doc/rg.1" "$HOME_MAN_DIR/man1"
-        mkdir -p "$HOME/.local/share/bash-completions/completions"
-        cp -f "$TEMPDIR/ripgrep-${ripgrep_tag}-${ripgrep_triple}/complete/rg.bash" "$HOME/.local/share/bash-completions/completions/rg"
     fi
     if ! command_exists eza && [[ -n "${eza_triple:-}" ]]; then
         echo "*** Downloading eza"
@@ -149,10 +143,6 @@ else
         curl -sLS "https://github.com/eza-community/eza/releases/download/${eza_tag}/eza_${eza_triple}.tar.gz" | \
             tar xz -C "$HOME_BIN_DIR" ./eza
         chmod +x "$HOME_BIN_DIR/eza"
-        curl -sLS "https://github.com/eza-community/eza/releases/download/${eza_tag}/completions-${eza_version}.tar.gz" | \
-            tar xz -C "$TEMPDIR"
-        mkdir -p "$HOME/.local/share/bash-completions/completions"
-        cp -f "$TEMPDIR/target/completions-${eza_version}/eza" "$HOME/.local/share/bash-completions/completions"
         curl -sLS "https://github.com/eza-community/eza/releases/download/${eza_tag}/man-${eza_version}.tar.gz" | \
             tar xz -C "$TEMPDIR"
         mkdir -p "$HOME_MAN_DIR/man1" "$HOME_MAN_DIR/man5"
@@ -169,8 +159,6 @@ else
         chmod +x "$HOME_BIN_DIR/bat"
         mkdir -p "${HOME_MAN_DIR}/man1"
         cp -f "$TEMPDIR/bat-${bat_tag}-${bat_triple}/bat.1" "${HOME_MAN_DIR}/man1/bat.1"
-        mkdir -p "$HOME/.local/share/bash-completions/completions"
-        cp -f "$TEMPDIR/bat-${bat_tag}-${bat_triple}/autocomplete/bat.bash" "$HOME/.local/share/bash-completions/completions/bat"
     fi
     if ! command_exists lesspipe.sh; then
         echo "*** Downloading lesspipe"
@@ -187,8 +175,6 @@ else
         mkdir -p "${HOME_MAN_DIR}/man1"
         cp -f "$TEMPDIR/fd-${fd_tag}-${fd_triple}/fd.1" "${HOME_MAN_DIR}/man1/fd.1"
         chmod +x "$HOME_BIN_DIR/fd"
-        mkdir -p "$HOME/.local/share/bash-completions/completions"
-        cp -f "$TEMPDIR/fd-${fd_tag}-${fd_triple}/autocomplete/fd.bash" "$HOME/.local/share/bash-completions/completions/fd"
     fi
     if ! command_exists fzf && [[ -n "${fzf_triple:-}" ]]; then
         echo "*** Downloading fzf"
@@ -220,6 +206,13 @@ mkdir -p "$HOME/.config"
 $LN -rfs --target-directory="$HOME/.config" $DOTFILES/config/*
 $LN -rfs "$DOTFILES/bin/edit" "$HOME_BIN_DIR/edit"
 
+echo "*** Installing zsh dotfiles"
+mkdir -p "$HOME/.config/zsh"
+[[ -e "$HOME/.config/zsh/.zshrc" ]] || echo "source \${HOME}/.dotfiles/zsh/zshrc" > "$HOME/.config/zsh/.zshrc"
+$LN -rfs "$DOTFILES/zsh/zsh_plugins.txt" "$HOME/.config/zsh/.zsh_plugins.txt"
+[[ -e "$HOME/.config/zsh/.zstyles" ]] || echo "source \${HOME}/.dotfiles/zsh/zstyles" > "$HOME/.config/zsh/.zstyles"
+[[ -e "$HOME/.zshenv" ]] || echo "source \${HOME}/.dotfiles/zsh/zshenv" > "$HOME/.zshenv"
+
 echo "*** Installing SSH keys"
 # Install SSH keys
 if command_exists ssh-import-id; then
@@ -231,31 +224,11 @@ elif [[ ! -e "$HOME/.ssh/authorized_keys" ]]; then
     chmod 600 "$HOME/.ssh/authorized_keys"
 fi
 
-echo "*** Installing ble.sh"
-curl -sLS https://github.com/akinomyoga/ble.sh/releases/download/nightly/ble-nightly.tar.xz | tar xJf - -C "$TEMPDIR"
-$BASH "$TEMPDIR"/ble-nightly/ble.sh --install ~/.local/share
-
-echo "*** Wiring up bash config scripts"
-DOTFILES_REL=$(${REALPATH} --relative-to="$HOME" "$DOTFILES")
-if [[ -f "${HOME}/.bash_profile" ]]; then
-    if ! ${GREP} -Fq ". \"\${HOME}/${DOTFILES_REL}/bash/bash_profile\"" ~/.bash_profile; then
-        echo ". \"\${HOME}/${DOTFILES_REL}/bash/bash_profile\"" >> ~/.bash_profile;
-    fi
-else
-    echo ". \"\${HOME}/${DOTFILES_REL}/bash/bash_profile\"" > ~/.bash_profile
-    echo "[[ -f \${HOME}/.bashrc ]] && . \"\${HOME}/.bashrc\"" >> ~/.bash_profile
-fi
-
-if [[ -f "${HOME}/.bashrc" ]]; then
-    if ! ${GREP} -Fq ". \"\${HOME}/${DOTFILES_REL}/bash/bashrc\"" ~/.bashrc; then
-        echo ". \"\${HOME}/${DOTFILES_REL}/bash/bashrc\"" >> ~/.bashrc;
-    fi
-else
-    echo ". \"\${HOME}/${DOTFILES_REL}/bash/bashrc\"" > ~/.bashrc;
-fi
-
 echo "*** Compiling bat cache"
-"${HOME_BIN_DIR}/bat" cache --build
+if [[ -x "$HOME_BIN_DIR/bat" ]]; then
+    ${HOME_BIN_DIR}/bat cache --build
+elif command_exists bat; then
+    bat cache --build
+fi
 
 echo "*** DONE!"
-
