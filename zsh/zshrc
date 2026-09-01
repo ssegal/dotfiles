@@ -29,6 +29,7 @@ export ALTERNATE_EDITOR=
 
 (( $+commands[lesspipe.sh] )) && eval "$(lesspipe.sh)"
 export LESS=' -R '
+export VISUAL="$EDITOR"
 
 if (( $+commands[eza] )); then
     alias ls="eza"
