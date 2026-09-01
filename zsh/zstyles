@@ -1,4 +1,4 @@
 #!/bin/false
 # -*- mode: sh; sh-shell: zsh -*-
 
-zstyle ":z1:editor:emacs" cursor "block"
+zstyle ":z1:editor:emacs" cursor "line"
