@@ -2,3 +2,6 @@
 # -*- mode: sh; sh-shell: zsh -*-
 
 zstyle ":z1:editor:emacs" cursor "line"
+
+# z1 doesn't detect homebrew on Linux, so we let a different plugin do it.
+zstyle ':z1:homebrew' skip 'yes'

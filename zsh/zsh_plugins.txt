@@ -2,4 +2,5 @@ mattmc3/z1
 
 wintermi/zsh-brew
 zsh-users/zsh-completions kind:fpath path:src
+zsh-users/zsh-history-substring-search
 jirutka/zsh-shift-select
