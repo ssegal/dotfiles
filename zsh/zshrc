@@ -40,11 +40,11 @@ if (( $+commands[eza] )); then
 fi
 
 if (( $+commands[bat] )); then
-    export LESSCOLORIZER="bat -p --theme=DarkPlus"
+    export LESSCOLORIZER="bat -p"
     export MANPAGER="sh -c 'col -bx | bat -l man -p'"
     export MANROFFOPT="-c"
 elif (( $+commands[batcat] )); then
-    export LESSCOLORIZER="batcat -p --theme=DarkPlus"
+    export LESSCOLORIZER="batcat -p"
     export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
     export MANROFFOPT="-c"
 fi
