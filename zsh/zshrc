@@ -28,6 +28,7 @@ export ALTERNATE_EDITOR=
 (( $+commands[python3] )) && path+="$(python3 -m site --user-base)/bin"
 (( $+commands[go] )) && path+="$(go env GOPATH)/bin"
 (( $+commands[dircolors] )) && source <(dircolors -b)
+(( $+commands[brew] )) && export HOMEBREW_NO_UPGRADE_AUTO_UPDATES_CASKS=1
 
 (( $+commands[lesspipe.sh] )) && source <(lesspipe.sh)
 export LESS=' -R '
