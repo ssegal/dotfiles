@@ -201,7 +201,6 @@ DOTFILES=$(dirname "$(${REALPATH} "$0")")
 
 echo "*** Creating links"
 $LN -rfs "$DOTFILES/emacs.d" "$HOME/.emacs.d"
-$LN -rfs "$DOTFILES/tmux.conf" "$HOME/.tmux.conf"
 mkdir -p "$HOME/.config"
 $LN -rfs --target-directory="$HOME/.config" $DOTFILES/config/*
 $LN -rfs "$DOTFILES/bin/edit" "$HOME_BIN_DIR/edit"
