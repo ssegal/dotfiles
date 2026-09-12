@@ -52,10 +52,13 @@ fi
 
 (( $+commands[thefuck] )) && source <(thefuck --alias)
 
-if (( $+commands[emacsclient] )); then
-    alias te="emacsclient -t"
-    alias ec="emacsclient"
-fi
+e() {
+    if [[ $INSIDE_EMACS == "ghostel" ]]; then
+        ghostel_cmd find-file-other-window "$@"
+    else
+        $EDITOR "$@"
+    fi
+}
 
 export EMAIL="ssegal127@gmail.com"
 export TZ="America/New_York"
