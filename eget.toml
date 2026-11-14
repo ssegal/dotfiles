@@ -1,0 +1,22 @@
+[global]
+target = "~/.local/bin"
+
+["BurntSushi/ripgrep"]
+asset_filters = ["musl"]
+
+["eza-community/eza"]
+asset_filters = ["gnu.tar.gz"]
+
+["sharkdp/bat"]
+asset_filters = ["musl"]
+
+["sharkdp/fd"]
+asset_filters = ["musl"]
+
+["junegunn/fzf"]
+
+["starship/starship"]
+
+
+
+
