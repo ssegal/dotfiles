@@ -18,13 +18,6 @@ command_exists() {
     return 0
 }
 
-TEMPDIR=$(mktemp -d)
-
-cleanup() {
-    [ -n "${TEMPDIR}" ] && rm -rf "${TEMPDIR}"
-}
-trap cleanup EXIT
-
 # Check for supported systems
 case "$(uname -sm)" in
     "Linux x86_64"|"Linux aarch64")
@@ -52,7 +45,7 @@ elif [[ ${1:-} == "--brew" ]]; then
     ${BASH} -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     eval "$($BREW shellenv)"
 elif [[ $(uname -s) == "Darwin" ]]; then
-    abort "!!! $MacOS requires homebrew.  Use \"--brew\"."
+    abort "!!! MacOS requires homebrew.  Use \"--brew\"."
 else
     echo "*** No homebrew installation found."
 fi
@@ -72,7 +65,6 @@ mkdir -p "$HOME_BIN_DIR"
 HOME_MAN_DIR="$HOME/.local/share/man"
 mkdir -p "$HOME_MAN_DIR"
 
-GREP="grep"
 LN="ln"
 DOTFILES=$(dirname "$(realpath "$0")")
 [[ -z "${LANG:-}" ]] && export LANG=en_US.UTF-8
@@ -85,10 +77,7 @@ if [[ -n "${HOMEBREW_PREFIX:-}" ]]; then
     if [[ "$(uname -s)" == "Darwin" ]]; then
         echo "*** MacOS-specific install"
         brew install -yq coreutils grep findutils gnu-sed gnu-tar gawk git nano
-        REALPATH="grealpath"
-        GREP="ggrep"
         LN="gln"
-        sudo chsh "$(whoami)" -s /bin/zsh
     fi
 else
     echo "*** Installing extra tools with eget"
@@ -105,7 +94,7 @@ fi
 echo "*** Creating links"
 $LN -rfs "$DOTFILES/emacs.d" "$HOME/.emacs.d"
 mkdir -p "$HOME/.config"
-$LN -rfs --target-directory="$HOME/.config" $DOTFILES/config/*
+$LN -rfs --target-directory="$HOME/.config" "$DOTFILES/config/*"
 $LN -rfs "$DOTFILES/bin/edit" "$HOME_BIN_DIR/edit"
 
 echo "*** Installing zsh dotfiles"

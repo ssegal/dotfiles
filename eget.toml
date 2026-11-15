@@ -17,6 +17,8 @@ asset_filters = ["musl"]
 
 ["starship/starship"]
 
+["michel-kraemer/zsh-patina"]
+asset_filters = ["musl.tar.gz"]
 
-
-
+["micro-editor/micro"]
+asset_filters = [".tar.gz", "^sha"]
