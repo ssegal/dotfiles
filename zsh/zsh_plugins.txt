@@ -1,6 +1,6 @@
+wintermi/zsh-brew
 mattmc3/z1
 
-wintermi/zsh-brew
 aloxaf/fzf-tab
 zsh-users/zsh-completions kind:fpath path:src
 zsh-users/zsh-history-substring-search

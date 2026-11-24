@@ -5,3 +5,7 @@ zstyle ":z1:editor:emacs" cursor "line"
 
 # z1 doesn't detect homebrew on Linux, so we let a different plugin do it.
 zstyle ':z1:homebrew' skip 'yes'
+
+if ! is-at-least "5.9"; then
+    zstyle ":z1:patina" skip "yes"
+fi
