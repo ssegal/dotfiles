@@ -1,7 +1,8 @@
 #!/bin/false
 # -*- mode: sh; sh-shell: zsh -*-
+# shellcheck disable=all
 
-zstyle ":z1:editor:emacs" cursor "line"
+zstyle ":z1:editor:emacs" cursor "line-blink"
 
 # z1 doesn't detect homebrew on Linux, so we let a different plugin do it.
 zstyle ':z1:homebrew' skip 'yes'

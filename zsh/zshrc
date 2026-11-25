@@ -1,10 +1,14 @@
 #!/bin/false
 # -*- mode: sh; sh-shell: zsh; -*-
+# shellcheck disable=all
 
 typeset -U path PATH
 typeset -U pkg_config_path PKG_CONFIG_PATH
 
 SCRIPT_DIR=${${(%):-%x}:a:h}
+
+# Don't let z1 set EDITOR.
+export EDITOR=${EDITOR:-"false"}
 
 source ${SCRIPT_DIR}/antidote/antidote.zsh
 antidote load
@@ -20,9 +24,11 @@ fi
 
 [[ -r ${HOME}/.cargo/env ]] && source ${HOME}/.cargo/env
 
-export ALTERNATE_EDITOR=
-(( $+commands[emacsclient] )) && export EDITOR='emacsclient -t'
-(( $+commands[edit] )) && export EDITOR="edit"
+[[ $EDITOR == "false" ]] && unset EDITOR
+
+export ALTERNATE_EDITOR=${ALTERNATE_EDITOR:-}
+(( $+commands[edit] )) && export EDITOR=${EDITOR:-"edit"}
+(( $+commands[emacsclient] )) && export EDITOR=${EDITOR-:"emacsclient -t"}
 (( $+commands[zoxide] )) && source <(zoxide init zsh)
 (( $+commands[fzf] )) && source <(fzf --zsh)
 (( $+commands[python3] )) && path+="$(python3 -m site --user-base)/bin"
