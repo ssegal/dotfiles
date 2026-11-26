@@ -23,7 +23,7 @@ case "$(uname -sm)" in
     "Linux x86_64"|"Linux aarch64")
         export BREW="/home/linuxbrew/.linuxbrew/bin/brew"
         ;;
-    "Darwin aarch64")
+    "Darwin arm64")
         export BREW="/opt/homebrew/bin/brew"
         ;;
     *)
