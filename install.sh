@@ -37,13 +37,13 @@ command_exists xz || abort "$0: xz missing"
 
 if [[ -x $BREW ]]; then
     echo "*** Existing homebrew found!"
-    eval "$($BREW shellenv)"
+    eval "$($BREW shellenv bash)"
 elif [[ ${1:-} == "--brew" ]]; then
     # install homebrew
     echo "*** Installing homebrew"
     export NONINTERACTIVE=1
     ${BASH} -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    eval "$($BREW shellenv)"
+    eval "$($BREW shellenv bash)"
 elif [[ $(uname -s) == "Darwin" ]]; then
     abort "!!! MacOS requires homebrew.  Use \"--brew\"."
 else

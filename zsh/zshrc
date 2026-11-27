@@ -27,8 +27,21 @@ fi
 [[ $EDITOR == "false" ]] && unset EDITOR
 
 export ALTERNATE_EDITOR=${ALTERNATE_EDITOR:-}
-(( $+commands[edit] )) && export EDITOR=${EDITOR:-"edit"}
-(( $+commands[emacsclient] )) && export EDITOR=${EDITOR-:"emacsclient -t"}
+
+# Set default editor (in preference order).  Honor existing value so
+# that editors with integrated terminals can pre-set their own value.
+if [[ -z $EDITOR ]]; then
+    if (( $+commands[emacsclient] )); then
+        export EDITOR="emacsclient -t"
+    elif (( $+commands[micro] )); then
+        export EDITOR="micro"
+    elif (( $+commands[nano] )); then
+        export EDITOR="nano"
+    elif (( $+commands[vi] )); then
+        export EDITOR="vi"
+    fi
+fi
+
 (( $+commands[zoxide] )) && source <(zoxide init zsh)
 (( $+commands[fzf] )) && source <(fzf --zsh)
 (( $+commands[python3] )) && path+="$(python3 -m site --user-base)/bin"
@@ -58,13 +71,8 @@ fi
 
 (( $+commands[thefuck] )) && source <(thefuck --alias)
 
-e() {
-    if [[ $INSIDE_EMACS == "ghostel" ]]; then
-        ghostel_cmd find-file-other-window "$@"
-    else
-        $EDITOR "$@"
-    fi
-}
+alias e="$EDITOR"
+alias ec="emacsclient"
 
 export EMAIL="ssegal127@gmail.com"
 export TZ="America/New_York"
